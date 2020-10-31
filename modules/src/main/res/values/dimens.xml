@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="textAppearanceHeadline1">96sp</dimen>
+    <dimen name="textAppearanceHeadline2">60sp</dimen>
+    <dimen name="textAppearanceHeadline3">48sp</dimen>
+    <dimen name="textAppearanceHeadline4">34sp</dimen>
+    <dimen name="textAppearanceHeadline5">24sp</dimen>
+    <dimen name="textAppearanceHeadline6">20sp</dimen>
+    <dimen name="textAppearanceSubtitle1">16sp</dimen>
+    <dimen name="textAppearanceSubtitle2">14sp</dimen>
+    <dimen name="textAppearanceBody1">16sp</dimen>
+    <dimen name="textAppearanceBody2">14sp</dimen>
+    <dimen name="textAppearanceCaption">12sp</dimen>
+    <dimen name="textAppearanceButton">13sp</dimen>
+    <dimen name="textAppearanceOverLine">12sp</dimen>
+    <dimen name="textAppearanceSubData">10sp</dimen>
+    <dimen name="progress_menu">35dp</dimen>
+    <dimen name="progress_dialog">45dp</dimen>
+    <dimen name="icon_dialog">38dp</dimen>
+
+</resources>

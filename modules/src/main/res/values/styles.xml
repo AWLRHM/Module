@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="MaterialButton.OutlinedButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="cornerRadius">25dp</item>
+        <item name="strokeColor">@color/cyan_500</item>
+    </style>
+</resources>

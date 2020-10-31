@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="choose">انتخاب کنید</string>
+    <string name="date">تاریخ</string>
+    <string name="no_data">داده ای برای نمایش وجود ندارد</string>
+    <string name="retry">تلاش مجدد</string>
+    <string name="search">جستجو کنید</string>
+    <string name="enter_search_word">کلمه جستجو خود را وارد نمایید</string>
+    <string name="no">خیر</string>
+    <string name="yes">بله</string>
+    <string name="warning">هشدار</string>
+    <string name="information">جهت اطلاع</string>
+    <string name="success">موفقیت آمیز</string>
+    <string name="new_changes_release">امکانات جدید این نسخه</string>
+    <string name="changes_list">لیست تغییرات</string>
+    <string name="understand">متوجه شدم</string>
+    <string name="please_wait">لطفا صبور باشید..</string>
+    <string name="error">خطا</string>
+    <string name="ok">تایید</string>
+    <string name="security_problem">برنامه به دلیل مشکلات امنیتی دستگاه شما قادر به پاسخگویی نمی باشد.</string>
+
+</resources>

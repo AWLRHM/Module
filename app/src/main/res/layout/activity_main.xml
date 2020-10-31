@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="ir.awlrhm.awlrhmmodule.MainActivity">
+
+    <ir.awlrhm.modules.view.DatePicker
+        android:id="@+id/picker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Hello World!"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ir.awlrhm.modules.view.Button
+        android:id="@+id/btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/picker"
+        app:btn_textColor="@color/red_A100"
+        app:btn_border="@drawable/border"
+        app:btn_icon_direction="LEFT"
+        app:btn_textSize="22sp"
+        app:btn_title="Hi Programmer"
+        app:btn_srcCompat="@drawable/ic_warning"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
