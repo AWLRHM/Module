@@ -15,7 +15,7 @@ allprojects {
  * Add the dependency
  ```sh
  dependencies {
-  implementation 'com.github.AWLRHM:Modules:xxx'
+  implementation 'com.github.AWLRHM:Modules:$last-release'
  }
  ```
 
