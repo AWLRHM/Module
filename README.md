@@ -1,6 +1,6 @@
 # Module
 
-[![](https://jitpack.io/v/AWLRHM/Modules.svg)](https://jitpack.io/#AWLRHM/Modules)
+[![](https://jitpack.io/v/AWLRHM/Module.svg)](https://jitpack.io/#AWLRHM/Module)
 
 
 * Add it in your root build.gradle at the end of repositories:
