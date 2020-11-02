@@ -1,589 +1,523 @@
 package ir.awlrhm.modules.utils;
 
-
-import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Locale;
+import java.util.TimeZone;
 
-public class PersianCalendar {
+import ir.hamsaa.persiandatepicker.util.PersianCalendarConstants;
+import ir.hamsaa.persiandatepicker.util.PersianCalendarUtils;
+import ir.hamsaa.persiandatepicker.util.PersianDateParser;
 
+/**
+ *
+ * <strong> Persian(Shamsi) calendar </strong>
+ * <p>
+ * </p>
+ * <p>
+ * The calendar consists of 12 months, the first six of which are 31 days, the
+ * next five 30 days, and the final month 29 days in a normal year and 30 days
+ * in a leap year.
+ * </p>
+ * <p>
+ * As one of the few calendars designed in the era of accurate positional
+ * astronomy, the Persian calendar uses a very complex leap year structure which
+ * makes it the most accurate solar calendar in use today. Years are grouped
+ * into cycles which begin with four normal years after which every fourth
+ * subsequent year in the cycle is a leap year. Cycles are grouped into grand
+ * cycles of either 128 years (composed of cycles of 29, 33, 33, and 33 years)
+ * or 132 years, containing cycles of of 29, 33, 33, and 37 years. A great grand
+ * cycle is composed of 21 consecutive 128 year grand cycles and a final 132
+ * grand cycle, for a total of 2820 years. The pattern of normal and leap years
+ * which began in 1925 will not repeat until the year 4745!
+ * </p>
+ * </p> Each 2820 year great grand cycle contains 2137 normal years of 365 days
+ * and 683 leap years of 366 days, with the average year length over the great
+ * grand cycle of 365.24219852. So close is this to the actual solar tropical
+ * year of 365.24219878 days that the Persian calendar accumulates an error of
+ * one day only every 3.8 million years. As a purely solar calendar, months are
+ * not synchronized with the phases of the Moon. </p>
+ * <p>
+ * </p>
+ *
+ * <p>
+ * <strong>PersianCalendar</strong> by extending Default GregorianCalendar
+ * provides capabilities such as:
+ * </p>
+ * <p>
+ * </p>
+ *
+ * <li>you can set the date in Persian by setPersianDate(persianYear,
+ * persianMonth, persianDay) and get the Gregorian date or vice versa</li>
+ * <p>
+ * </p>
+ * <li>determine is the current date is Leap year in persian calendar or not by
+ * IsPersianLeapYear()</li>
+ * <p>
+ * </p>
+ * <li>getPersian short and long Date String getPersianShortDate() and
+ * getPersianLongDate you also can set delimiter to assign delimiter of returned
+ * dateString</li>
+ * <p>
+ * </p>
+ * <li>Parse string based on assigned delimiter</li>
+ * <p>
+ * </p>
+ * <p>
+ * </p>
+ * <p>
+ * </p>
+ * <p>
+ * <strong> Example </strong>
+ * </p>
+ * <p>
+ * </p>
+ *
+ * <pre>
+ * {@code
+ *       PersianCalendar persianCal = new PersianCalendar();
+ *       System.out.println(persianCal.getPersianShortDate());
+ *
+ *       persianCal.set(1982, Calendar.MAY, 22);
+ *       System.out.println(persianCal.getPersianShortDate());
+ *
+ *       persianCal.setDelimiter(" , ");
+ *       persianCal.parse("1361 , 03 , 01");
+ *       System.out.println(persianCal.getPersianShortDate());
+ *
+ *       persianCal.setPersianDate(1361, 3, 1);
+ *       System.out.println(persianCal.getPersianLongDate());
+ *       System.out.println(persianCal.getTime());
+ *
+ *       persianCal.addPersianDate(Calendar.MONTH, 33);
+ *       persianCal.addPersianDate(Calendar.YEAR, 5);
+ *       persianCal.addPersianDate(Calendar.DATE, 50);
+ *
+ * }
+ *
+ * <pre>
+ * @author Morteza  contact: <a href="mailto:Mortezaadi@gmail.com">Mortezaadi@gmail.com</a>
+ * @version 1.1
+ */
+public class PersianCalendar extends GregorianCalendar {
+
+    private static final long serialVersionUID = 5541422440580682494L;
+
+    private int persianYear;
+    private int persianMonth;
+    private int persianDay;
+    // use to seperate PersianDate's field and also Parse the DateString based
+    // on this delimiter
+    private String delimiter = "/";
+
+    private long convertToMilis(long julianDate) {
+        return PersianCalendarConstants.MILLIS_JULIAN_EPOCH + julianDate * PersianCalendarConstants.MILLIS_OF_A_DAY
+                + PersianCalendarUtils.ceil(getTimeInMillis() - PersianCalendarConstants.MILLIS_JULIAN_EPOCH, PersianCalendarConstants.MILLIS_OF_A_DAY);
+    }
+
+    /**
+     * default constructor
+     * <p>
+     * most of the time we don't care about TimeZone when we persisting Date or
+     * doing some calculation on date. <strong> Default TimeZone was set to
+     * "GMT" </strong> in order to make developer to work more convenient with
+     * the library; however you can change the TimeZone as you do in
+     * GregorianCalendar by calling setTimeZone()
+     */
+    public PersianCalendar(long millis) {
+        setTimeInMillis(millis);
+    }
+
+    /**
+     * default constructor
+     * <p>
+     * most of the time we don't care about TimeZone when we persisting Date or
+     * doing some calculation on date. <strong> Default TimeZone was set to
+     * "GMT" </strong> in order to make developer to work more convenient with
+     * the library; however you can change the TimeZone as you do in
+     * GregorianCalendar by calling setTimeZone()
+     */
     public PersianCalendar() {
-        Calendar calendar = new GregorianCalendar();
-        setGregorianDate(calendar.get(Calendar.YEAR),
-                calendar.get(Calendar.MONTH) + 1,
-                calendar.get(Calendar.DAY_OF_MONTH));
-    }
-
-    public static String persianToJdn(int year, int month, int day) {
-        final long PERSIAN_EPOCH = 1948321; // The JDN of 1 Farvardin 1
-
-        long epbase;
-        if (year >= 0)
-            epbase = year - 474;
-        else
-            epbase = year - 473;
-
-        long epyear = 474 + (epbase % 2820);
-
-        long mdays;
-        if (month <= 7)
-            mdays = (month - 1) * 31;
-        else
-            mdays = (month - 1) * 30 + 6;
-
-        long persianEpoch = day + mdays + ((epyear * 682) - 110) / 2816 + (epyear - 1) * 365
-                + epbase / 2820 * 1029983 + (PERSIAN_EPOCH - 1);
-        return jdnToCivil(persianEpoch);
-    }
-
-    private static String jdnToCivil(long jdn) {
-
-        if (jdn > 2299160) {
-            long l = jdn + 68569;
-            long n = ((4 * l) / 146097);
-            l = l - ((146097 * n + 3) / 4);
-            long i = ((4000 * (l + 1)) / 1461001);
-            l = l - ((1461 * i) / 4) + 31;
-            long j = ((80 * l) / 2447);
-            int day = (int) (l - ((2447 * j) / 80));
-            l = (j / 11);
-            int month = (int) (j + 2 - 12 * l);
-            int year = (int) (100 * (n - 49) + i + l);
-            return year + "/" + month + "/" + day;
-        } else
-            return jdnToJulian(jdn);
-    }
-
-    private static String jdnToJulian(long jdn) {
-        long j = jdn + 1402;
-        long k = ((j - 1) / 1461);
-        long l = j - 1461 * k;
-        long n = ((l - 1) / 365) - (l / 1461);
-        long i = l - 365 * n + 30;
-        j = ((80 * i) / 2447);
-        int day = (int) (i - ((2447 * j) / 80));
-        i = (j / 11);
-        int month = (int) (j + 2 - 12 * i);
-        int year = (int) (4 * k + n + i - 4716);
-
-        return year + "/" + month + "/" + day;
+        super(TimeZone.getDefault(), Locale.getDefault());
     }
 
     /**
-     * JavaSource_Calendar:
-     * This constructor receives a Gregorian date and initializes the other private
-     * members of the class accordingly.
-     *
-     * @param year  int
-     * @param month int
-     * @param day   int
+     * Calculate persian date from current Date and populates the corresponding
+     * fields(persianYear, persianMonth, persianDay)
      */
-    public PersianCalendar(int year, int month, int day) {
-        setGregorianDate(year, month, day);
+    protected void calculatePersianDate() {
+        YearMonthDay persianYearMonthDay = gregorianToJalali(new YearMonthDay(this.get(YEAR), this.get(MONTH), this.get(DAY_OF_MONTH)));
+        this.persianYear = persianYearMonthDay.year;
+        this.persianMonth = persianYearMonthDay.month;
+        this.persianDay = persianYearMonthDay.day;
     }
 
     /**
-     * getIranianYear:
-     * Returns the 'year' part of the Iranian date.
+     * Determines if the given year is a leap year in persian calendar. Returns
+     * true if the given year is a leap year.
      *
-     * @return int
+     * @return boolean
      */
-    public int getIranianYear() {
-        return irYear;
+    public boolean isPersianLeapYear() {
+        // calculatePersianDate();
+        return PersianCalendarUtils.isPersianLeapYear(this.persianYear);
     }
 
     /**
-     * getIranianMonth:
-     * Returns the 'month' part of the Iranian date.
+     * set the persian date it converts PersianDate to the Julian and assigned
+     * equivalent milliseconds to the instance
      *
-     * @return int
+     * @param persianYear
+     * @param persianMonth
+     * @param persianDay
      */
-    public int getIranianMonth() {
-        return irMonth;
+    public void setPersianDate(int persianYear, int persianMonth, int persianDay) {
+        this.persianYear = persianYear;
+        this.persianMonth = persianMonth;
+        this.persianDay = persianDay;
+        YearMonthDay gregorianYearMonthDay = persianToGregorian(new YearMonthDay(persianYear, this.persianMonth - 1, persianDay));
+        this.set(gregorianYearMonthDay.year, gregorianYearMonthDay.month, gregorianYearMonthDay.day);
+    }
+
+    public int getPersianYear() {
+        // calculatePersianDate();
+        return this.persianYear;
     }
 
     /**
-     * getIranianDay:
-     * Returns the 'day' part of the Iranian date.
-     *
-     * @return int
+     * @return int persian month number
      */
-    public int getIranianDay() {
-        return irDay;
+    public int getPersianMonth() {
+        // calculatePersianDate();
+        return this.persianMonth + 1;
     }
 
     /**
-     * getGregorianYear:
-     * Returns the 'year' part of the Gregorian date.
-     *
-     * @return int
+     * @return String persian month name
      */
-    public int getGregorianYear() {
-        return gYear;
+    public String getPersianMonthName() {
+        // calculatePersianDate();
+        return PersianCalendarConstants.persianMonthNames[this.persianMonth];
     }
 
     /**
-     * getGregorianMonth:
-     * Returns the 'month' part of the Gregorian date.
-     *
-     * @return int
+     * @return int Persian day in month
      */
-    public int getGregorianMonth() {
-        return gMonth;
+    public int getPersianDay() {
+        // calculatePersianDate();
+        return this.persianDay;
     }
 
     /**
-     * getGregorianDay:
-     * Returns the 'day' part of the Gregorian date.
-     *
-     * @return int
+     * @return String Name of the day in week
      */
-    public int getGregorianDay() {
-        return gDay;
-    }
-
-    /**
-     * getJulianYear:
-     * Returns the 'year' part of the Julian date.
-     *
-     * @return int
-     */
-    public int getJulianYear() {
-        return juYear;
-    }
-
-    /**
-     * getJulianMonth:
-     * Returns the 'month' part of the Julian date.
-     *
-     * @return int
-     */
-    public int getJulianMonth() {
-        return juMonth;
-    }
-
-    /**
-     * getJulianDay()
-     * Returns the 'day' part of the Julian date.
-     *
-     * @return int
-     */
-    public int getJulianDay() {
-        return juDay;
-    }
-
-    /**
-     * getIranianDate:
-     * Returns a string version of Iranian date
-     *
-     * @return String
-     */
-    public String getIranianDate() {
-        String Month = String.valueOf(irMonth);
-        String Day = String.valueOf(irDay);
-        if (irMonth < 10) {
-            Month = "0" + String.valueOf(irMonth);
+    public String getPersianWeekDayName() {
+        switch (get(DAY_OF_WEEK)) {
+            case SATURDAY:
+                return PersianCalendarConstants.persianWeekDays[0];
+            case SUNDAY:
+                return PersianCalendarConstants.persianWeekDays[1];
+            case MONDAY:
+                return PersianCalendarConstants.persianWeekDays[2];
+            case TUESDAY:
+                return PersianCalendarConstants.persianWeekDays[3];
+            case WEDNESDAY:
+                return PersianCalendarConstants.persianWeekDays[4];
+            case THURSDAY:
+                return PersianCalendarConstants.persianWeekDays[5];
+            default:
+                return PersianCalendarConstants.persianWeekDays[6];
         }
-        if (irDay < 10) {
-            Day = "0" + String.valueOf(irDay);
+
+    }
+
+    /**
+     * @return String of Persian Date ex: شنبه 01 خرداد 1361
+     */
+    public String getPersianLongDate() {
+        return getPersianWeekDayName() + "  " + this.persianDay + "  " + getPersianMonthName() + "  " + this.persianYear;
+    }
+
+    public String getPersianLongDateAndTime() {
+        return getPersianLongDate() + " ساعت " + get(HOUR_OF_DAY) + ":" + get(MINUTE) + ":" + get(SECOND);
+    }
+
+    /**
+     * @return String of persian date formatted by
+     * 'YYYY[delimiter]mm[delimiter]dd' default delimiter is '/'
+     */
+    public String getPersianShortDate() {
+        // calculatePersianDate();
+        return "" + formatToMilitary(this.persianYear) + delimiter + formatToMilitary(getPersianMonth()) + delimiter + formatToMilitary(this.persianDay);
+    }
+
+    public String getPersianShortDateTime() {
+        return "" + formatToMilitary(this.persianYear) + delimiter + formatToMilitary(getPersianMonth()) + delimiter + formatToMilitary(this.persianDay) + " " + formatToMilitary(this.get(HOUR_OF_DAY)) + ":" + formatToMilitary(get(MINUTE))
+                + ":" + formatToMilitary(get(SECOND));
+    }
+
+    private String formatToMilitary(int i) {
+        return (i < 9) ? "0" + i : String.valueOf(i);
+    }
+
+    /**
+     * add specific amout of fields to the current date for now doesnt handle
+     * before 1 farvardin hejri (before epoch)
+     *
+     * @param field
+     * @param amount <pre>
+     *                Usage:
+     *                {@code
+     *                addPersianDate(Calendar.YEAR, 2);
+     *                addPersianDate(Calendar.MONTH, 3);
+     *                }
+     *               </pre>
+     *               <p>
+     *               u can also use Calendar.HOUR_OF_DAY,Calendar.MINUTE,
+     *               Calendar.SECOND, Calendar.MILLISECOND etc
+     */
+    //
+    public void addPersianDate(int field, int amount) {
+        if (amount == 0) {
+            return; // Do nothing!
         }
-        return (irYear + "/" + Month + "/" + Day);
+
+        if (field < 0 || field >= ZONE_OFFSET) {
+            throw new IllegalArgumentException();
+        }
+
+        if (field == YEAR) {
+            setPersianDate(this.persianYear + amount, getPersianMonth(), this.persianDay);
+            return;
+        } else if (field == MONTH) {
+            setPersianDate(this.persianYear + ((getPersianMonth() + amount) / 12), (getPersianMonth() + amount) % 12, this.persianDay);
+            return;
+        }
+        add(field, amount);
+        calculatePersianDate();
     }
 
     /**
-     * getGregorianDate:
-     * Returns a string version of Gregorian date
+     * <pre>
+     *    use <code>{@link PersianDateParser}</code> to parse string
+     *    and get the Persian Date.
+     * </pre>
      *
-     * @return String
+     * @param dateString
+     * @see PersianDateParser
      */
-    public String getGregorianDate() {
-        return (gYear + "/" + gMonth + "/" + gDay);
+    public void parse(String dateString) {
+        ir.hamsaa.persiandatepicker.util.PersianCalendar p = new PersianDateParser(dateString, delimiter).getPersianDate();
+        setPersianDate(p.getPersianYear(), p.getPersianMonth(), p.getPersianDay());
+    }
+
+    public String getDelimiter() {
+        return delimiter;
     }
 
     /**
-     * getJulianDate:
-     * Returns a string version of Julian date
+     * assign delimiter to use as a separator of date fields.
      *
-     * @return String
+     * @param delimiter
      */
-    public String getJulianDate() {
-        return (juYear + "/" + juMonth + "/" + juDay);
+    public void setDelimiter(String delimiter) {
+        this.delimiter = delimiter;
     }
 
-    /**
-     * getWeekDayStr:
-     * Returns the week day name.
-     *
-     * @return String
-     */
-    public String getWeekDayStr() {
-        String weekDayStr[] = {
-                "دوشنبه",
-                "سه شنبه",
-                "چهارشنبه",
-                "پنجشنبه",
-                "جمعه",
-                "شنبه",
-                "یکشنبه"};
-        return (weekDayStr[getDayOfWeek()]);
-    }
-
-    /**
-     * toString:
-     * Overrides the default toString() method to return all dates.
-     *
-     * @return String
-     */
+    @Override
     public String toString() {
-        return (getWeekDayStr() +
-                ", Gregorian:[" + getGregorianDate() +
-                "], Julian:[" + getJulianDate() +
-                "], Iranian:[" + getIranianDate() + "]");
+        String str = super.toString();
+        return str.substring(0, str.length() - 1) + ",PersianDate=" + getPersianShortDate() + "]";
     }
 
-
-    /**
-     * getDayOfWeek:
-     * Returns the week day number. Monday=0..Sunday=6;
-     *
-     * @return int
-     */
-    public int getDayOfWeek() {
-        return (JDN % 7);
-    }
-
-    /**
-     * nextDay:
-     * Go to next julian day number (JDN) and adjusts the other dates.
-     */
-    public void nextDay() {
-        JDN++;
-        JDNToIranian();
-        JDNToJulian();
-        JDNToGregorian();
-    }
-
-    /**
-     * nextDay:
-     * Overload the nextDay() method to accept the number of days to go ahead and
-     * adjusts the other dates accordingly.
-     *
-     * @param days int
-     */
-    public void nextDay(int days) {
-        JDN += days;
-        JDNToIranian();
-        JDNToJulian();
-        JDNToGregorian();
-    }
-
-    /**
-     * previousDay:
-     * Go to previous julian day number (JDN) and adjusts the otehr dates.
-     */
-    public void previousDay() {
-        JDN--;
-        JDNToIranian();
-        JDNToJulian();
-        JDNToGregorian();
-    }
-
-    /**
-     * previousDay:
-     * Overload the previousDay() method to accept the number of days to go backward
-     * and adjusts the other dates accordingly.
-     *
-     * @param days int
-     */
-    public void previousDay(int days) {
-        JDN -= days;
-        JDNToIranian();
-        JDNToJulian();
-        JDNToGregorian();
-    }
-
-    /**
-     * setIranianDate:
-     * Sets the date according to the Iranian calendar and adjusts the other dates.
-     *
-     * @param year  int
-     * @param month int
-     * @param day   int
-     */
-    public void setIranianDate(int year, int month, int day) {
-        irYear = year;
-        irMonth = month;
-        irDay = day;
-        JDN = IranianDateToJDN();
-        JDNToIranian();
-        JDNToJulian();
-        JDNToGregorian();
-    }
-
-    /**
-     * setGregorianDate:
-     * Sets the date according to the Gregorian calendar and adjusts the other dates.
-     *
-     * @param year  int
-     * @param month int
-     * @param day   int
-     */
-    public void setGregorianDate(int year, int month, int day) {
-        gYear = year;
-        gMonth = month;
-        gDay = day;
-        JDN = gregorianDateToJDN(year, month, day);
-        JDNToIranian();
-        JDNToJulian();
-        JDNToGregorian();
-    }
-
-    /**
-     * setJulianDate:
-     * Sets the date according to the Julian calendar and adjusts the other dates.
-     *
-     * @param year  int
-     * @param month int
-     * @param day   int
-     */
-    public void setJulianDate(int year, int month, int day) {
-        juYear = year;
-        juMonth = month;
-        juDay = day;
-        JDN = julianDateToJDN(year, month, day);
-        JDNToIranian();
-        JDNToJulian();
-        JDNToGregorian();
-    }
-
-    /**
-     * IranianCalendar:
-     * This method determines if the Iranian (Jalali) year is leap (366-day long)
-     * or is the common year (365 days), and finds the day in March (Gregorian
-     * Calendar)of the first day of the Iranian year ('irYear').Iranian year (irYear)
-     * ranges from (-61 to 3177).This method will set the following private data
-     * members as follows:
-     * leap: Number of years since the last leap year (0 to 4)
-     * Gy: Gregorian year of the begining of Iranian year
-     * march: The March day of Farvardin the 1st (first day of jaYear)
-     */
-    private void IranianCalendar() {
-        // Iranian years starting the 33-year rule
-        int Breaks[] =
-                {-61, 9, 38, 199, 426, 686, 756, 818, 1111, 1181,
-                        1210, 1635, 2060, 2097, 2192, 2262, 2324, 2394, 2456, 3178};
-        int jm, N, leapJ, leapG, jp, j, jump;
-        gYear = irYear + 621;
-        leapJ = -14;
-        jp = Breaks[0];
-        // Find the limiting years for the Iranian year 'irYear'
-        j = 1;
-        do {
-            jm = Breaks[j];
-            jump = jm - jp;
-            if (irYear >= jm) {
-                leapJ += (jump / 33 * 8 + (jump % 33) / 4);
-                jp = jm;
-            }
-            j++;
-        } while ((j < 20) && (irYear >= jm));
-        N = irYear - jp;
-        // Find the number of leap years from AD 621 to the begining of the current
-        // Iranian year in the Iranian (Jalali) calendar
-        leapJ += (N / 33 * 8 + ((N % 33) + 3) / 4);
-        if (((jump % 33) == 4) && ((jump - N) == 4))
-            leapJ++;
-        // And the same in the Gregorian date of Farvardin the first
-        leapG = gYear / 4 - ((gYear / 100 + 1) * 3 / 4) - 150;
-        march = 20 + leapJ - leapG;
-        // Find how many years have passed since the last leap year
-        if ((jump - N) < 6)
-            N = N - jump + ((jump + 4) / 33 * 33);
-        leap = (((N + 1) % 33) - 1) % 4;
-        if (leap == -1)
-            leap = 4;
-    }
-
-
-    /**
-     * IsLeap:
-     * This method determines if the Iranian (Jalali) year is leap (366-day long)
-     * or is the common year (365 days), and finds the day in March (Gregorian
-     * Calendar)of the first day of the Iranian year ('irYear').Iranian year (irYear)
-     * ranges from (-61 to 3177).This method will set the following private data
-     * members as follows:
-     * leap: Number of years since the last leap year (0 to 4)
-     * Gy: Gregorian year of the begining of Iranian year
-     * march: The March day of Farvardin the 1st (first day of jaYear)
-     */
-    public boolean IsLeap(int irYear1) {
-        // Iranian years starting the 33-year rule
-        int Breaks[] =
-                {-61, 9, 38, 199, 426, 686, 756, 818, 1111, 1181,
-                        1210, 1635, 2060, 2097, 2192, 2262, 2324, 2394, 2456, 3178};
-        int jm, N, leapJ, leapG, jp, j, jump;
-        gYear = irYear1 + 621;
-        leapJ = -14;
-        jp = Breaks[0];
-        // Find the limiting years for the Iranian year 'irYear'
-        j = 1;
-        do {
-            jm = Breaks[j];
-            jump = jm - jp;
-            if (irYear1 >= jm) {
-                leapJ += (jump / 33 * 8 + (jump % 33) / 4);
-                jp = jm;
-            }
-            j++;
-        } while ((j < 20) && (irYear1 >= jm));
-        N = irYear1 - jp;
-        // Find the number of leap years from AD 621 to the begining of the current
-        // Iranian year in the Iranian (Jalali) calendar
-        leapJ += (N / 33 * 8 + ((N % 33) + 3) / 4);
-        if (((jump % 33) == 4) && ((jump - N) == 4))
-            leapJ++;
-        // And the same in the Gregorian date of Farvardin the first
-        leapG = gYear / 4 - ((gYear / 100 + 1) * 3 / 4) - 150;
-        march = 20 + leapJ - leapG;
-        // Find how many years have passed since the last leap year
-        if ((jump - N) < 6)
-            N = N - jump + ((jump + 4) / 33 * 33);
-        leap = (((N + 1) % 33) - 1) % 4;
-        if (leap == -1)
-            leap = 4;
-        return leap == 4 || leap == 0;
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
 
     }
 
-
-    /**
-     * IranianDateToJDN:
-     * Converts a date of the Iranian calendar to the Julian Day Number. It first
-     * invokes the 'IranianCalender' private method to convert the Iranian date to
-     * Gregorian date and then returns the Julian Day Number based on the Gregorian
-     * date. The Iranian date is obtained from 'irYear'(1-3100),'irMonth'(1-12) and
-     * 'irDay'(1-29/31).
-     *
-     * @return long (Julian Day Number)
-     */
-    private int IranianDateToJDN() {
-        IranianCalendar();
-        return (gregorianDateToJDN(gYear, 3, march) + (irMonth - 1) * 31 - irMonth / 7 * (irMonth - 7) + irDay - 1);
+    @Override
+    public int hashCode() {
+        return super.hashCode();
     }
 
-    /**
-     * JDNToIranian:
-     * Converts the current value of 'JDN' Julian Day Number to a date in the
-     * Iranian calendar. The caller should make sure that the current value of
-     * 'JDN' is set correctly. This method first converts the JDN to Gregorian
-     * calendar and then to Iranian calendar.
-     */
-    private void JDNToIranian() {
-        JDNToGregorian();
-        irYear = gYear - 621;
-        IranianCalendar(); // This invocation will update 'leap' and 'march'
-        int JDN1F = gregorianDateToJDN(gYear, 3, march);
-        int k = JDN - JDN1F;
-        if (k >= 0) {
-            if (k <= 185) {
-                irMonth = 1 + k / 31;
-                irDay = (k % 31) + 1;
-                return;
-            } else
-                k -= 186;
-        } else {
-            irYear--;
-            k += 179;
-            if (leap == 1)
-                k++;
+    @Override
+    public void set(int field, int value) {
+        super.set(field, value);
+        calculatePersianDate();
+    }
+
+    @Override
+    public void setTimeInMillis(long millis) {
+        super.setTimeInMillis(millis);
+        calculatePersianDate();
+    }
+
+    @Override
+    public void setTimeZone(TimeZone zone) {
+        super.setTimeZone(zone);
+        calculatePersianDate();
+    }
+
+    // Helper Functions
+    private static int gregorianDaysInMonth[] = {31, 28, 31, 30, 31, 30, 31,
+            31, 30, 31, 30, 31};
+    private static int persianDaysInMonth[] = {31, 31, 31, 31, 31, 31, 30, 30,
+            30, 30, 30, 29};
+
+    private static YearMonthDay gregorianToJalali(YearMonthDay gregorian) {
+
+        if (gregorian.getMonth() > 11 || gregorian.getMonth() < -11) {
+            throw new IllegalArgumentException();
         }
-        irMonth = 7 + k / 30;
-        irDay = (k % 30) + 1;
+        int persianYear;
+        int persianMonth;
+        int persianDay;
+
+        int gregorianDayNo, persianDayNo;
+        int persianNP;
+        int i;
+
+        gregorian.setYear(gregorian.getYear() - 1600);
+        gregorian.setDay(gregorian.getDay() - 1);
+
+        gregorianDayNo = 365 * gregorian.getYear() + (int) Math.floor((gregorian.getYear() + 3) / 4)
+                - (int) Math.floor((gregorian.getYear() + 99) / 100)
+                + (int) Math.floor((gregorian.getYear() + 399) / 400);
+        for (i = 0; i < gregorian.getMonth(); ++i) {
+            gregorianDayNo += gregorianDaysInMonth[i];
+        }
+
+        if (gregorian.getMonth() > 1 && ((gregorian.getYear() % 4 == 0 && gregorian.getYear() % 100 != 0)
+                || (gregorian.getYear() % 400 == 0))) {
+            ++gregorianDayNo;
+        }
+
+        gregorianDayNo += gregorian.getDay();
+
+        persianDayNo = gregorianDayNo - 79;
+
+        persianNP = (int) Math.floor(persianDayNo / 12053);
+        persianDayNo = persianDayNo % 12053;
+
+        persianYear = 979 + 33 * persianNP + 4 * (int) (persianDayNo / 1461);
+        persianDayNo = persianDayNo % 1461;
+
+        if (persianDayNo >= 366) {
+            persianYear += (int) Math.floor((persianDayNo - 1) / 365);
+            persianDayNo = (persianDayNo - 1) % 365;
+        }
+
+        for (i = 0; i < 11 && persianDayNo >= persianDaysInMonth[i]; ++i) {
+            persianDayNo -= persianDaysInMonth[i];
+        }
+        persianMonth = i;
+        persianDay = persianDayNo + 1;
+
+        return new YearMonthDay(persianYear, persianMonth, persianDay);
     }
 
 
-    /**
-     * julianDateToJDN:
-     * Calculates the julian day number (JDN) from Julian calendar dates. This
-     * integer number corresponds to the noon of the date (i.e. 12 hours of
-     * Universal Time). This method was tested to be good (valid) since 1 March,
-     * -100100 (of both calendars) up to a few millions (10^6) years into the
-     * future. The algorithm is based on D.A.Hatcher, Q.Jl.R.Astron.Soc. 25(1984),
-     * 53-55 slightly modified by K.M. Borkowski, Post.Astron. 25(1987), 275-279.
-     *
-     * @param year  int
-     * @param month int
-     * @param day   int
-     * @return int
-     */
-    private int julianDateToJDN(int year, int month, int day) {
-        return (year + (month - 8) / 6 + 100100) * 1461 / 4 + (153 * ((month + 9) % 12) + 2) / 5 + day - 34840408;
+    private static YearMonthDay persianToGregorian(YearMonthDay persian) {
+        if (persian.getMonth() > 11 || persian.getMonth() < -11) {
+            throw new IllegalArgumentException();
+        }
+
+        int gregorianYear;
+        int gregorianMonth;
+        int gregorianDay;
+
+        int gregorianDayNo, persianDayNo;
+        int leap;
+
+        int i;
+        persian.setYear(persian.getYear() - 979);
+        persian.setDay(persian.getDay() - 1);
+
+        persianDayNo = 365 * persian.getYear() + (int) (persian.getYear() / 33) * 8
+                + (int) Math.floor(((persian.getYear() % 33) + 3) / 4);
+        for (i = 0; i < persian.getMonth(); ++i) {
+            persianDayNo += persianDaysInMonth[i];
+        }
+
+        persianDayNo += persian.getDay();
+
+        gregorianDayNo = persianDayNo + 79;
+
+        gregorianYear = 1600 + 400 * (int) Math.floor(gregorianDayNo / 146097); /* 146097 = 365*400 + 400/4 - 400/100 + 400/400 */
+        gregorianDayNo = gregorianDayNo % 146097;
+
+        leap = 1;
+        if (gregorianDayNo >= 36525) /* 36525 = 365*100 + 100/4 */ {
+            gregorianDayNo--;
+            gregorianYear += 100 * (int) Math.floor(gregorianDayNo / 36524); /* 36524 = 365*100 + 100/4 - 100/100 */
+            gregorianDayNo = gregorianDayNo % 36524;
+
+            if (gregorianDayNo >= 365) {
+                gregorianDayNo++;
+            } else {
+                leap = 0;
+            }
+        }
+
+        gregorianYear += 4 * (int) Math.floor(gregorianDayNo / 1461); /* 1461 = 365*4 + 4/4 */
+        gregorianDayNo = gregorianDayNo % 1461;
+
+        if (gregorianDayNo >= 366) {
+            leap = 0;
+
+            gregorianDayNo--;
+            gregorianYear += (int) Math.floor(gregorianDayNo / 365);
+            gregorianDayNo = gregorianDayNo % 365;
+        }
+
+        for (i = 0; gregorianDayNo >= gregorianDaysInMonth[i] + ((i == 1 && leap == 1) ? i : 0); i++) {
+            gregorianDayNo -= gregorianDaysInMonth[i] + ((i == 1 && leap == 1) ? i : 0);
+        }
+        gregorianMonth = i;
+        gregorianDay = gregorianDayNo + 1;
+
+        return new YearMonthDay(gregorianYear, gregorianMonth, gregorianDay);
+
     }
 
-    /**
-     * JDNToJulian:
-     * Calculates Julian calendar dates from the julian day number (JDN) for the
-     * period since JDN=-34839655 (i.e. the year -100100 of both calendars) to
-     * some millions (10^6) years ahead of the present. The algorithm is based on
-     * D.A. Hatcher, Q.Jl.R.Astron.Soc. 25(1984), 53-55 slightly modified by K.M.
-     * Borkowski, Post.Astron. 25(1987), 275-279).
-     */
-    private void JDNToJulian() {
-        int j = 4 * JDN + 139361631;
-        int i = ((j % 1461) / 4) * 5 + 308;
-        juDay = (i % 153) / 5 + 1;
-        juMonth = ((i / 153) % 12) + 1;
-        juYear = j / 1461 - 100100 + (8 - juMonth) / 6;
+    static class YearMonthDay {
+
+        YearMonthDay(int year, int month, int day) {
+            this.year = year;
+            this.month = month;
+            this.day = day;
+        }
+
+        private int year;
+        private int month;
+        private int day;
+
+        public int getYear() {
+            return year;
+        }
+
+        public void setYear(int year) {
+            this.year = year;
+        }
+
+        public int getMonth() {
+            return month;
+        }
+
+        public void setMonth(int month) {
+            this.month = month;
+        }
+
+        public int getDay() {
+            return day;
+        }
+
+        public void setDay(int date) {
+            this.day = date;
+        }
+
+        public String toString() {
+            return getYear() + "/" + getMonth() + "/" + getDay();
+        }
     }
-
-    /**
-     * gergorianDateToJDN:
-     * Calculates the julian day number (JDN) from Gregorian calendar dates. This
-     * integer number corresponds to the noon of the date (i.e. 12 hours of
-     * Universal Time). This method was tested to be good (valid) since 1 March,
-     * -100100 (of both calendars) up to a few millions (10^6) years into the
-     * future. The algorithm is based on D.A.Hatcher, Q.Jl.R.Astron.Soc. 25(1984),
-     * 53-55 slightly modified by K.M. Borkowski, Post.Astron. 25(1987), 275-279.
-     *
-     * @param year  int
-     * @param month int
-     * @param day   int
-     * @return int
-     */
-    private int gregorianDateToJDN(int year, int month, int day) {
-        int jdn = (year + (month - 8) / 6 + 100100) * 1461 / 4 + (153 * ((month + 9) % 12) + 2) / 5 + day - 34840408;
-        jdn = jdn - (year + 100100 + (month - 8) / 6) / 100 * 3 / 4 + 752;
-        return (jdn);
-    }
-
-    /**
-     * JDNToGregorian:
-     * Calculates Gregorian calendar dates from the julian day number (JDN) for
-     * the period since JDN=-34839655 (i.e. the year -100100 of both calendars) to
-     * some millions (10^6) years ahead of the present. The algorithm is based on
-     * D.A. Hatcher, Q.Jl.R.Astron.Soc. 25(1984), 53-55 slightly modified by K.M.
-     * Borkowski, Post.Astron. 25(1987), 275-279).
-     */
-    private void JDNToGregorian() {
-        int j = 4 * JDN + 139361631;
-        j = j + (((((4 * JDN + 183187720) / 146097) * 3) / 4) * 4 - 3908);
-        int i = ((j % 1461) / 4) * 5 + 308;
-        gDay = (i % 153) / 5 + 1;
-        gMonth = ((i / 153) % 12) + 1;
-        gYear = j / 1461 - 100100 + (8 - gMonth) / 6;
-    }
-
-
-    private int irYear; // Year part of a Iranian date
-    private int irMonth; // Month part of a Iranian date
-    private int irDay; // Day part of a Iranian date
-    private int gYear; // Year part of a Gregorian date
-    private int gMonth; // Month part of a Gregorian date
-    private int gDay; // Day part of a Gregorian date
-    private int juYear; // Year part of a Julian date
-    private int juMonth; // Month part of a Julian date
-    private int juDay; // Day part of a Julian date
-    private int leap; // Number of years since the last leap year (0 to 4)
-    private int JDN; // Julian Day Number
-    private int march; // The march day of Farvardin the first (First day of jaYear)
-
 }
