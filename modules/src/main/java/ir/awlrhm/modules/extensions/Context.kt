@@ -15,8 +15,9 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import ir.awlrhm.modules.utils.calendar.PersianCalendar
-import ir.awlrhm.modules.view.Listener
-import ir.awlrhm.modules.view.PersianDatePickerDialog
+import ir.awlrhm.modules.view.Spinner
+import ir.awlrhm.modules.view.datePicker.CalendarActionListener
+import ir.awlrhm.modules.view.datePicker.PersianDatePickerDialog
 import ir.awrhm.modules.R
 import ir.awrhm.modules.enums.MessageStatus
 
@@ -73,7 +74,8 @@ fun Context.showDatePicker(callback:(String)->Unit){
         .setTypeFace(ResourcesCompat.getFont(this, R.font.iran_sans_mobile))
         .setTitleType(PersianDatePickerDialog.WEEKDAY_DAY_MONTH_YEAR)
         .setShowInBottomSheet(true)
-        .setListener(object : Listener {
+        .setListener(object :
+            CalendarActionListener {
             @SuppressLint("SetTextI18n")
             override fun onDateSelected(persianCalendar: PersianCalendar) {
                callback.invoke(
@@ -152,3 +154,8 @@ fun Context.showSettings() {
     intent.data = uri
     startActivity(intent)
 }*/
+
+fun Context.failedSpinnerData(sp: Spinner){
+    sp.loading(false)
+    sp.text = getString(R.string.no_data)
+}

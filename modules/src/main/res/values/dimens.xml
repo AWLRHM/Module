@@ -17,5 +17,6 @@
     <dimen name="progress_menu">35dp</dimen>
     <dimen name="progress_dialog">45dp</dimen>
     <dimen name="icon_dialog">38dp</dimen>
+    <dimen name="guid_line">20dp</dimen>
 
 </resources>

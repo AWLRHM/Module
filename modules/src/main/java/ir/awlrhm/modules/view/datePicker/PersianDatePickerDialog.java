@@ -1,4 +1,4 @@
-package ir.awlrhm.modules.view;
+package ir.awlrhm.modules.view.datePicker;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import androidx.annotation.ColorInt;
 import androidx.annotation.ColorRes;
 import androidx.annotation.DrawableRes;
@@ -16,8 +17,11 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDialog;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.content.ContextCompat;
+
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+
 import java.util.Date;
+
 import ir.awlrhm.modules.utils.calendar.PersianCalendar;
 import ir.awlrhm.modules.utils.calendar.PersianHelper;
 import ir.awrhm.modules.R;
@@ -32,7 +36,7 @@ public class PersianDatePickerDialog {
     private Context context;
     private String positiveButtonString = "تایید";
     private String negativeButtonString = "انصراف";
-    private Listener listener;
+    private CalendarActionListener listener;
     private int maxYear = 0;
     private int minYear = 0;
     private PersianCalendar initDate = new PersianCalendar();
@@ -54,7 +58,7 @@ public class PersianDatePickerDialog {
         this.context = context;
     }
 
-    public PersianDatePickerDialog setListener(Listener listener) {
+    public PersianDatePickerDialog setListener(CalendarActionListener listener) {
         this.listener = listener;
         return this;
     }
@@ -334,7 +338,5 @@ public class PersianDatePickerDialog {
                 Log.d("PersianDatePickerDialog", "never should be here");
                 break;
         }
-
     }
-
 }
