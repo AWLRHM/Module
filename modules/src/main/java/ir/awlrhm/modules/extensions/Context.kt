@@ -159,3 +159,9 @@ fun Context.failedSpinnerData(sp: Spinner){
     sp.loading(false)
     sp.text = getString(R.string.no_data)
 }
+
+fun Context.isValidTitle(title: String?): String{
+    return if(title.isNullOrEmpty())
+        getString(R.string.no_data)
+    else title
+}

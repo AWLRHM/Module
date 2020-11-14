@@ -110,6 +110,6 @@ class Spinner(context: Context, attrs: AttributeSet) : ConstraintLayout(context,
             return txtSpinner?.text.toString()
         }
         set(value) {
-            txtSpinner?.text = value
+            txtSpinner?.text = value ?: "sdf"
         }
 }
