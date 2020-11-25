@@ -48,5 +48,11 @@
             style="?attr/borderlessButtonStyle"
             android:textColor="@color/cyan_500"
             android:visibility="gone"/>
+
     </androidx.appcompat.widget.LinearLayoutCompat>
+
+   <include
+       android:id="@+id/waitLoading"
+       layout="@layout/loading"
+       android:visibility="gone"/>
 </FrameLayout>

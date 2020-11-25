@@ -317,4 +317,7 @@ https://material.io/guidelines/style/color.html -->
     <color name="blackInactiveIconColor">#61000000</color> <!-- 38% -->
     <color name="whiteActiveIconColor">#FFFFFFFF</color> <!-- 100% -->
     <color name="whiteInactiveIconColor">#80FFFFFF</color> <!-- 50% -->
+
+    <color name="blackTransparent">#2a000000</color>
+
 </resources>

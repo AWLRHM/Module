@@ -2,6 +2,7 @@ package ir.awlrhm.awlrhmmodule
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import ir.awlrhm.modules.extensions.showDatePicker
 import ir.awlrhm.modules.extensions.showSecurityErrorDialog
 import ir.awrhm.awlrhmmodule.R
@@ -18,5 +19,10 @@ class MainActivity : AppCompatActivity() {
 
             }
         }
+        rclItem.layoutManager(LinearLayoutManager(this))
+        rclItem.view?.adapter = Adapter(mutableListOf(
+            TestModel("test 1"),
+            TestModel("test 2")
+        ))
     }
 }

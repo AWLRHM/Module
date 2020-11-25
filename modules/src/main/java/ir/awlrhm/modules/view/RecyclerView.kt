@@ -6,13 +6,17 @@ import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.FrameLayout
 import android.widget.ProgressBar
+import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
-import ir.awrhm.modules.R
 import ir.awlrhm.modules.extensions.configProgressbar
+import ir.awrhm.modules.R
 import ir.awrhm.modules.utils.GridItemDecoration
 import ir.financialworld.masterstock.utils.VerticalItemDecoration
+import kotlinx.android.synthetic.main.awlrhm_recycler_view.view.*
+import kotlinx.android.synthetic.main.loading.view.*
 
 class RecyclerView(context: Context, attrs: AttributeSet) : FrameLayout(context, attrs) {
 
@@ -77,7 +81,6 @@ class RecyclerView(context: Context, attrs: AttributeSet) : FrameLayout(context,
             return recyclerView
         }
 
-
     fun showNoData() {
         progress?.visibility = View.GONE
         recyclerView?.visibility = View.GONE
@@ -88,6 +91,10 @@ class RecyclerView(context: Context, attrs: AttributeSet) : FrameLayout(context,
         noData?.visibility = View.GONE
         progress?.visibility = View.VISIBLE
         recyclerView?.visibility = View.INVISIBLE
+    }
+
+    fun showActionLoading(visible: Boolean){
+        waitLoading.isVisible = visible
     }
 
     fun clear(){
@@ -128,7 +135,9 @@ class RecyclerView(context: Context, attrs: AttributeSet) : FrameLayout(context,
         setGridItemDecoration(horizontalResId, verticalResId)
     }
 
-    fun progressbar(color: Int) = apply { progress?.let {
+    fun themeColor(color: Int) = apply { progress?.let {
+        waitLoading.txtWait.setTextColor(ContextCompat.getColor(context, color))
+        context.configProgressbar(waitLoading.prcWait, color)
         context.configProgressbar(it, color)
     }}
     fun layoutManager(manager: LinearLayoutManager) = apply { configRecyclerView(manager) }

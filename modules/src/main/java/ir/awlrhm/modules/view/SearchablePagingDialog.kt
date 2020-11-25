@@ -117,7 +117,7 @@ class SearchablePagingDialog<T>(
                     listModel = list
                 }
             }
-        } else
+        } else if(isAdded)
             showNoData()
     }
 
@@ -157,7 +157,7 @@ class SearchablePagingDialog<T>(
     }
 
     interface OnActionListener<T> {
-        fun onSearchPaging(count: Int, search: String)
+        fun onSearchPaging(pageNumber: Int, search: String)
         fun onChoose(model: DynamicModel<T>)
         fun onDismiss()
     }
