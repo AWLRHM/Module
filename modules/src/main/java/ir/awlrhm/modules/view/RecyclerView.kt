@@ -33,6 +33,9 @@ class RecyclerView(context: Context, attrs: AttributeSet) : FrameLayout(context,
         progress = view.findViewById(R.id.recyclerProgress)
         noData = view.findViewById(R.id.noData)
         btnRetry = view.findViewById(R.id.btnRetry)
+        btnRetry?.setOnClickListener {
+            listener?.onRefresh()
+        }
     }
 
     private fun configRecyclerView(
@@ -83,6 +86,7 @@ class RecyclerView(context: Context, attrs: AttributeSet) : FrameLayout(context,
         }
 
     fun showNoData() {
+        listener?.let { btnRetry?.isVisible = true }
         progress?.visibility = View.GONE
         recyclerView?.visibility = View.GONE
         noData?.visibility = View.VISIBLE
