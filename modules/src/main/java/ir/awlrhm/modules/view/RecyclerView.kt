@@ -25,6 +25,7 @@ class RecyclerView(context: Context, attrs: AttributeSet) : FrameLayout(context,
     private var noData: View? = null
     private var btnRetry: MaterialButton? = null
     var isOnLoading: Boolean = true
+    private var listener: OnActionListener?= null
 
     init {
         val view = View.inflate(context, R.layout.awlrhm_recycler_view, this)
@@ -122,15 +123,10 @@ class RecyclerView(context: Context, attrs: AttributeSet) : FrameLayout(context,
         })
     }
 
-    interface OnRecyclerViewListener {
-        fun onScrolled(
-            recyclerView: RecyclerView,
-            dx: Int,
-            dy: Int
-        )
-    }
+
 
     fun verticalDecoration(resId: Int = 0) = apply { setVerticalItemDecoration(resId) }
+
     fun gridDecoration(horizontalResId: Int = 0, verticalResId: Int = 0) = apply {
         setGridItemDecoration(horizontalResId, verticalResId)
     }
@@ -138,8 +134,25 @@ class RecyclerView(context: Context, attrs: AttributeSet) : FrameLayout(context,
     fun themeColor(color: Int) = apply { progress?.let {
         waitLoading.txtWait.setTextColor(ContextCompat.getColor(context, color))
         context.configProgressbar(waitLoading.prcWait, color)
+
         context.configProgressbar(it, color)
     }}
     fun layoutManager(manager: LinearLayoutManager) = apply { configRecyclerView(manager) }
+
     fun animation(animation: Int = 0) = apply { setAnimation(animation) }
+
+    fun onActionListener(listener: OnActionListener) = apply {
+        this.listener = listener
+    }
+
+    interface OnRecyclerViewListener {
+        fun onScrolled(
+            recyclerView: RecyclerView,
+            dx: Int,
+            dy: Int
+        )
+    }
+    interface OnActionListener{
+        fun onRefresh()
+    }
 }
