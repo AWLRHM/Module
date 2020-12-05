@@ -84,7 +84,6 @@ class ActionDialog private constructor(
             callback.invoke()
             dismiss()
         }
-
     }
 
     private fun setNegative(text: String, callback: () -> Unit) {

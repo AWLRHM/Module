@@ -79,27 +79,32 @@ class RecyclerView(context: Context, attrs: AttributeSet) : FrameLayout(context,
     val view: RecyclerView?
         get() {
             isOnLoading = false
-            progress?.visibility = View.GONE
-            recyclerView?.visibility = View.VISIBLE
-            noData?.visibility = View.GONE
+            progress?.isVisible = false
+            recyclerView?.isVisible = true
+            noData?.isVisible = false
             return recyclerView
         }
 
     fun showNoData() {
         listener?.let { btnRetry?.isVisible = true }
-        progress?.visibility = View.GONE
-        recyclerView?.visibility = View.GONE
-        noData?.visibility = View.VISIBLE
+        progress?.isVisible = false
+        waitLoading.isVisible = false
+        recyclerView?.isVisible = false
+        noData?.isVisible = true
     }
 
     fun showLoading() {
-        noData?.visibility = View.GONE
-        progress?.visibility = View.VISIBLE
-        recyclerView?.visibility = View.INVISIBLE
+        noData?.isVisible = false
+        progress?.isVisible = true
+        recyclerView?.isVisible = false
     }
 
-    fun showActionLoading(visible: Boolean){
-        waitLoading.isVisible = visible
+    var actionLoading: Boolean
+    get(){
+        return waitLoading.isVisible
+    }
+    set(value){
+        waitLoading.isVisible = value
     }
 
     fun clear(){
