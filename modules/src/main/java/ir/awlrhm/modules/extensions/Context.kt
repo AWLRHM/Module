@@ -154,3 +154,9 @@ fun Context.showSettings() {
     intent.data = uri
     startActivity(intent)
 }*/
+
+fun Context.isValidTitle(title: String?): String{
+    return if(title.isNullOrEmpty())
+        getString(R.string.no_data)
+    else title
+}
