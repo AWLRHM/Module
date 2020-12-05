@@ -105,11 +105,11 @@ class Spinner(context: Context, attrs: AttributeSet) : ConstraintLayout(context,
             }.show(activity.supportFragmentManager, SearchableDialog.TAG)
     }
 
-    var text: String
+    var text: String?
         get() {
             return txtSpinner?.text.toString()
         }
         set(value) {
-            txtSpinner?.text = value ?: "sdf"
+            txtSpinner?.text = value ?: "داده ای برای نمایش وجود ندارد"
         }
 }
