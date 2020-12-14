@@ -13,7 +13,7 @@ class CrashLog(
     private val crashes = database.crashes
 
     fun isExistCrashLog(): Boolean {
-        return crashes[0].stackTrace.isNullOrEmpty()
+        return !crashes[0].stackTrace.isNullOrEmpty()
     }
 
     val crashLogs: List<Crash>
@@ -39,5 +39,9 @@ class CrashLog(
             .description(log.toString())
             .build()
             .show(activity.supportFragmentManager, ActionDialog.TAG)
+    }
+
+    fun deleteCrashes(): Boolean{
+        return database.deleteCrashes() > 0
     }
 }

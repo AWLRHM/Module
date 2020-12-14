@@ -108,7 +108,7 @@ class ActionDialog private constructor(
         var status: MessageStatus? = null
         var positiveCallback: (() -> Unit)? = null
         var negativeCallback: (() -> Unit)? = null
-        var cancelable: Boolean? = null
+        var cancelable: Boolean = true
 
         fun title(title: String) = apply { this.title = title }
 

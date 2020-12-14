@@ -17,7 +17,7 @@ public class CrashTable implements BaseColumns {
       DATE + " TEXT)";
 
   public static final String DROP_QUERY = "drop table " + TABLE_NAME;
-  public static final String TRUNCATE_QUERY = "delete from " + TABLE_NAME;
+  public static final String DELETE_QUERY = "delete from " + TABLE_NAME;
   public static final String SELECT_ALL = "SELECT * FROM " + TABLE_NAME + " ORDER BY " + _ID + " DESC";
 
   public static String selectById(int id) {

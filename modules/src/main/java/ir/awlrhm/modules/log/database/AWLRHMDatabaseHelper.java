@@ -15,7 +15,7 @@ import ir.awlrhm.modules.log.investigation.Crash;
 
 public class AWLRHMDatabaseHelper extends SQLiteOpenHelper {
   private static final int VERSION = 2;
-  private static final String DB_NAME = "Sherlock";
+  private static final String DB_NAME = "ALRHMLogger";
 
   public AWLRHMDatabaseHelper(Context context) {
     super(context, DB_NAME, null, VERSION);
@@ -30,6 +30,13 @@ public class AWLRHMDatabaseHelper extends SQLiteOpenHelper {
   public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
     sqLiteDatabase.execSQL(CrashTable.DROP_QUERY);
     sqLiteDatabase.execSQL(CrashTable.CREATE_QUERY);
+  }
+
+  public int deleteCrashes(){
+    SQLiteDatabase database = getWritableDatabase();
+    int id = database.delete(CrashTable.TABLE_NAME, null, null);
+    database.close();
+    return id;
   }
 
   public int insertCrash(CrashRecord crashRecord) {
