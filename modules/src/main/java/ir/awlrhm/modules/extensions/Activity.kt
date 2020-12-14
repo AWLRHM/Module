@@ -1,4 +1,4 @@
-package ir.awrhm.modules.extensions
+package ir.awlrhm.modules.extensions
 
 import android.app.Activity
 import android.content.Intent
@@ -69,3 +69,5 @@ fun Activity.ySnake(message: String, action: String) {
     textView.setTextColor(ContextCompat.getColor(this, R.color.white))
     snackbar.show()
 }
+
+

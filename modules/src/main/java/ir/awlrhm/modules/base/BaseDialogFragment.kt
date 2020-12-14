@@ -25,5 +25,5 @@ abstract class BaseDialogFragment: DialogFragment() {
     }
 
     abstract fun setup()
-    abstract fun handleEvents()
+    open fun handleEvents(){}
 }

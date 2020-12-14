@@ -15,7 +15,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import ir.awlrhm.modules.utils.calendar.PersianCalendar
-import ir.awlrhm.modules.view.Spinner
 import ir.awlrhm.modules.view.datePicker.CalendarActionListener
 import ir.awlrhm.modules.view.datePicker.PersianDatePickerDialog
 import ir.awrhm.modules.R

@@ -12,9 +12,17 @@ import ir.nikafarinegan.automation.view.changesDialog.Adapter
 import kotlinx.android.synthetic.main.awlrhm_dialog_changes_list.*
 
 class ChangesListDialog(
-    private val list: List<ReleaseChangeModel>,
-    private val callback: ()-> Unit
-): BaseDialogFragment() {
+    private val list: List<ReleaseChangeModel>
+) : BaseDialogFragment() {
+
+    constructor(
+        list: List<ReleaseChangeModel>,
+        listener: OnActionListener
+    ) : this(list) {
+        this.listener = listener
+    }
+
+    private var listener: OnActionListener? = null
 
     override fun setup() {
         rclChanges.layoutManager = LinearLayoutManager(context)
@@ -37,10 +45,6 @@ class ChangesListDialog(
         }
     }
 
-    override fun handleEvents() {
-
-    }
-
     override fun onStart() {
         super.onStart()
         dialog?.let {
@@ -53,10 +57,14 @@ class ChangesListDialog(
 
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
-        callback.invoke()
+        listener?.onDismiss()
     }
 
-    companion object{
+    interface OnActionListener {
+        fun onDismiss()
+    }
+
+    companion object {
         val TAG = "automation: ${ChangesListDialog::class.java.simpleName}"
     }
 }

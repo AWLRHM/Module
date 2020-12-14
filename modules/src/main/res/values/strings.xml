@@ -18,7 +18,9 @@
     <string name="please_wait">لطفا صبور باشید..</string>
     <string name="error">خطا</string>
     <string name="ok">تایید</string>
-    <string name="wait">لطفا منتظر بمانید...</string>
+    <string name="wait">لطفا منتظر بمانید</string>
     <string name="security_problem">برنامه به دلیل مشکلات امنیتی دستگاه شما قادر به پاسخگویی نمی باشد.</string>
+    <string name="downloading">در حال دانلود</string>
+
 
 </resources>
