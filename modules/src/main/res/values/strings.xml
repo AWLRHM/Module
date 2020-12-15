@@ -22,7 +22,14 @@
     <string name="security_problem">برنامه به دلیل مشکلات امنیتی دستگاه شما قادر به پاسخگویی نمی باشد.</string>
     <string name="downloading">در حال دانلود</string>
     <string name="set_permission_add_attachment">برای افزودن ضمیمه لطفا دسترسی های لازم را اعطا فرمایید.</string>
-
+    <string name="emulator_detection">Emulator Detection</string>
+    <string name="app_not_run_on_emulator">امکان اجرای برنامه برروی دستگاه های شبیه ساز وجود ندارد.</string>
+    <string name="reverse_engineering_tools_detection">RE Tools Detection</string>
+    <string name="root_detection">Root Detection</string>
+    <string name="your_device_is_root">برنامه به دلیل Root بودن دستگاه شما قادر به پاسخگویی نمی باشد.</string>
+    <string name="is_exist_reverse_engineering_tools">برنامه به دلیل وجود اپلیکیشن های غیرامن و مخرب برروی دستگاه شما قادر به پاسخگویی نمی باشد.</string>
+    <string name="parallel_space_app_exist">برنامه های  ParallelSpace</string>
+    <string name="is_exist_parallel_space_app">به دلیل وجود اپلیکیشن های مخرب برروی گوشی شما، برنامه قادر به پاسخگویی نمی باشد.</string>
 
 
 </resources>
