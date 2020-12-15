@@ -1,5 +1,6 @@
 package ir.awlrhm.modules.extensions
 
+import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
@@ -11,7 +12,17 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.snackbar.Snackbar
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.MultiplePermissionsReport
+import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.PermissionDeniedResponse
+import com.karumi.dexter.listener.PermissionGrantedResponse
+import com.karumi.dexter.listener.PermissionRequest
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener
+import com.karumi.dexter.listener.single.PermissionListener
+import ir.awlrhm.modules.utils.OnPermissionListener
 import ir.awrhm.modules.R
+import ir.awrhm.modules.enums.MessageStatus
 import java.io.File
 
 fun Activity.configBottomSheet(view: View, divide: Float) {
@@ -70,4 +81,90 @@ fun Activity.ySnake(message: String, action: String) {
     snackbar.show()
 }
 
+
+fun Activity.checkWriteStoragePermission(
+    callback: () -> Unit
+){
+    Dexter.withActivity(this)
+        .withPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        .withListener(object : PermissionListener {
+            override fun onPermissionGranted(response: PermissionGrantedResponse) {
+                callback.invoke()
+            }
+
+            override fun onPermissionDenied(response: PermissionDeniedResponse) {
+                yToast(
+                    getString(R.string.set_permission_add_attachment),
+                    MessageStatus.ERROR
+                )
+            }
+
+            override fun onPermissionRationaleShouldBeShown(
+                permission: PermissionRequest,
+                token: PermissionToken
+            ) {
+                token.continuePermissionRequest()
+            }
+        }).check()
+}
+
+fun Activity.checkReadWriteStoragePermission(
+    callback: () -> Unit
+){
+    Dexter.withActivity(this)
+        .withPermissions(
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+        )
+        .withListener(object : MultiplePermissionsListener {
+            override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
+                report?.let {
+                    if (report.areAllPermissionsGranted()) {
+                        callback.invoke()
+
+                    } else {
+                        yToast(
+                            getString(R.string.set_permission_add_attachment),
+                            MessageStatus.ERROR
+                        )
+                    }
+                }
+            }
+
+            override fun onPermissionRationaleShouldBeShown(
+                permissions: MutableList<PermissionRequest>?,
+                token: PermissionToken?
+            ) {
+                token?.continuePermissionRequest()
+            }
+        })
+        .withErrorListener {
+            yToast(
+                getString(R.string.set_permission_add_attachment),
+                MessageStatus.ERROR
+            )
+        }
+        .check()
+}
+
+fun Activity.checkReadPhoneState(callback: OnPermissionListener){
+    Dexter.withActivity(this)
+        .withPermission(Manifest.permission.READ_PHONE_STATE)
+        .withListener(object : PermissionListener {
+            override fun onPermissionGranted(response: PermissionGrantedResponse) {
+                callback.onPermissionGranted()
+            }
+
+            override fun onPermissionDenied(response: PermissionDeniedResponse) {
+                callback.onPermissionDenied()
+            }
+
+            override fun onPermissionRationaleShouldBeShown(
+                permission: PermissionRequest,
+                token: PermissionToken
+            ) {
+                token.continuePermissionRequest()
+            }
+        }).check()
+}
 

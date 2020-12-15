@@ -21,6 +21,8 @@
     <string name="wait">لطفا منتظر بمانید</string>
     <string name="security_problem">برنامه به دلیل مشکلات امنیتی دستگاه شما قادر به پاسخگویی نمی باشد.</string>
     <string name="downloading">در حال دانلود</string>
+    <string name="set_permission_add_attachment">برای افزودن ضمیمه لطفا دسترسی های لازم را اعطا فرمایید.</string>
+
 
 
 </resources>
