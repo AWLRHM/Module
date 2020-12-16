@@ -31,12 +31,9 @@ public class AWLRHMLogger {
 
     final Thread.UncaughtExceptionHandler handler = Thread.getDefaultUncaughtExceptionHandler();
 
-    Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
-      @Override
-      public void uncaughtException(Thread thread, Throwable throwable) {
-        analyzeAndReportCrash(throwable);
-        handler.uncaughtException(thread, throwable);
-      }
+    Thread.setDefaultUncaughtExceptionHandler((thread, throwable) -> {
+      analyzeAndReportCrash(throwable);
+      handler.uncaughtException(thread, throwable);
     });
   }
 

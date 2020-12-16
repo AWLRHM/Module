@@ -3,7 +3,6 @@ package ir.awlrhm.modules.log
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.FragmentActivity
 import ir.awlrhm.modules.extensions.yToast
 import ir.awlrhm.modules.log.database.AWLRHMDatabaseHelper
@@ -14,27 +13,13 @@ import ir.awrhm.modules.enums.MessageStatus
 
 class CrashLog(
     private val activity: FragmentActivity
-){
+) {
     private val database = AWLRHMDatabaseHelper(activity)
     private val crashes = database.crashes
+
     private val log = StringBuilder()
 
-    fun isExistCrashLog(): Boolean {
-        return !crashes[0].stackTrace.isNullOrEmpty()
-    }
-
-    val crashLogs: List<Crash>
-        get() = crashes
-
-   fun copyToClipboard(){
-        val clipboard: ClipboardManager =
-            activity.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        val clip = ClipData.newPlainText("Stack trace", log.toString())
-        clipboard.setPrimaryClip(clip)
-       activity.yToast("Copy to Clipboard", MessageStatus.INFORMATION)
-    }
-
-    fun showCrashLog() {
+    init {
         val viewModel = CrashViewModel(crashes[0])
         log.append("device info : ${viewModel.deviceName}\n")
         log.append("device brand : ${viewModel.deviceBrand}\n")
@@ -47,14 +32,34 @@ class CrashLog(
         log.append("\n\n")
         log.append("Stack Trace ==================\n")
         log.append(crashes[0].stackTrace)
+    }
 
+    fun isExistCrashLog(): Boolean {
+        return !crashes[0].stackTrace.isNullOrEmpty()
+    }
+
+    val crashLogs: List<Crash>
+        get() = crashes
+
+    fun copyToClipboard() {
+        val clipboard: ClipboardManager =
+            activity.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clip = ClipData.newPlainText("Stack trace", log.toString())
+        clipboard.setPrimaryClip(clip)
+        activity.yToast("Copy to Clipboard", MessageStatus.INFORMATION)
+    }
+
+    val fullCrashLog: StringBuilder
+        get() = log
+
+    fun showCrashLog() {
         ActionDialog.Builder()
             .description(log.toString())
             .build()
             .show(activity.supportFragmentManager, ActionDialog.TAG)
     }
 
-    fun deleteCrashes(): Boolean{
+    fun deleteCrashes(): Boolean {
         return database.deleteCrashes() > 0
     }
 }
