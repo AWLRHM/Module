@@ -16,7 +16,6 @@ class CrashLog(
 ) {
     private val database = AWLRHMDatabaseHelper(activity)
     private val crashes = database.crashes
-
     private val log = StringBuilder()
 
     init {
@@ -49,12 +48,12 @@ class CrashLog(
         activity.yToast("Copy to Clipboard", MessageStatus.INFORMATION)
     }
 
-    val fullCrashLog: StringBuilder
-        get() = log
+    val fullCrashLog: String
+        get() = log.toString()
 
     fun showCrashLog() {
         ActionDialog.Builder()
-            .description(log.toString())
+            .description(fullCrashLog)
             .build()
             .show(activity.supportFragmentManager, ActionDialog.TAG)
     }

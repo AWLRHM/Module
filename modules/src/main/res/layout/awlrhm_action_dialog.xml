@@ -65,7 +65,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="0.5"
                 android:background="@color/red_50"
-                android:visibility="v">
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/txtNegative"
