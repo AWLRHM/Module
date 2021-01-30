@@ -9,8 +9,8 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
-import ir.awrhm.modules.R
 import ir.awlrhm.modules.models.ItemModel
+import ir.awrhm.modules.R
 import kotlinx.android.synthetic.main.awlrhm_spinner.view.*
 
 class Spinner(context: Context, attrs: AttributeSet) : ConstraintLayout(context, attrs) {
@@ -77,15 +77,18 @@ class Spinner(context: Context, attrs: AttributeSet) : ConstraintLayout(context,
         callback: (ItemModel) -> Unit
     ) {
         loading(false)
-        if (list.size == 1) {
-            txtSpinner?.text = list[0].title
-            callback.invoke(list[0])
+        when {
+            list.isEmpty() -> txtSpinner?.text = activity.getString(R.string.no_data)
+            list.size == 1 -> {
+                txtSpinner?.text = list[0].title
+                callback.invoke(list[0])
 
-        } else
-            ChooseDialog(list) {
+            }
+            else -> ChooseDialog(list) {
                 txtSpinner?.text = it.title
                 callback.invoke(it)
             }.show(activity.supportFragmentManager, ChooseDialog.TAG)
+        }
     }
 
     fun showSearchableData(
@@ -94,15 +97,18 @@ class Spinner(context: Context, attrs: AttributeSet) : ConstraintLayout(context,
         callback: (ItemModel) -> Unit
     ) {
         loading(false)
-        if (list.size == 1) {
-            txtSpinner?.text = list[0].title
-            callback.invoke(list[0])
+        when {
+            list.isEmpty() -> txtSpinner?.text = activity.getString(R.string.no_data)
+            list.size == 1 -> {
+                txtSpinner?.text = list[0].title
+                callback.invoke(list[0])
 
-        } else
-            SearchableDialog(list) {
+            }
+            else -> SearchableDialog(list) {
                 txtSpinner?.text = it.title
                 callback.invoke(it)
             }.show(activity.supportFragmentManager, SearchableDialog.TAG)
+        }
     }
 
     var text: String?

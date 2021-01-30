@@ -49,7 +49,7 @@ fun FragmentActivity.downloadNewVersion(
     ).execute()
 }
 
-fun FragmentActivity.isSecure(callback: ()->Unit) {
+fun FragmentActivity.checkSecurity(callback: ()->Unit) {
     val isRooted = CheckRootUtil().isDeviceRooted
     val isEmulator = CheckEmulatorUtil().isEmulator(this)
     val isExistReverseEngTools =
