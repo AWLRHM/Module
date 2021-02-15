@@ -33,6 +33,8 @@
     <string name="secret_key_name">biometric_sample_encryption_key</string>
     <string name="prompt_info_title">ورود با اثر انگشت</string>
     <string name="prompt_info_subtitle">اثر انگشت خود را برای ورود دوعاملی در قسمت حسگر اثرانگشت قرار دهید</string>
+    <string name="prompt_info_use_app_password">ورود با نام کاربری</string>
+    <string name="error_operation">خطا در انجام عملیات</string>
 
 
 </resources>

@@ -12,7 +12,8 @@ import ir.awrhm.modules.enums.MessageStatus
 
 
 class FingerPrint(
-    private val context: Context
+    private val context: AppCompatActivity,
+    private val listener: OnActionListener
 ) {
 
     private lateinit var cryptographyManager: CryptographyManager
@@ -26,15 +27,19 @@ class FingerPrint(
             else false
         }
 
-    fun AppCompatActivity.use() {
-        if (hasFingerPrint) {
-            val secretKeyName = getString(R.string.secret_key_name)
-            cryptographyManager = CryptographyManager()
-            val cipher = cryptographyManager.getInitializedCipherForEncryption(secretKeyName)
-            val biometricPrompt =
-                BiometricPromptUtils.createBiometricPrompt(this, ::encryptAndStoreServerToken)
-            val promptInfo = BiometricPromptUtils.createPromptInfo(this)
-            biometricPrompt.authenticate(promptInfo, BiometricPrompt.CryptoObject(cipher))
+    fun use() {
+        try {
+            if (hasFingerPrint) {
+                val secretKeyName = context.getString(R.string.secret_key_name)
+                cryptographyManager = CryptographyManager()
+                val cipher = cryptographyManager.getInitializedCipherForEncryption(secretKeyName)
+                val biometricPrompt =
+                    BiometricPromptUtils.createBiometricPrompt(context, ::encryptAndStoreServerToken)
+                val promptInfo = BiometricPromptUtils.createPromptInfo(context)
+                biometricPrompt.authenticate(promptInfo, BiometricPrompt.CryptoObject(cipher))
+            }
+        } catch (e: Exception) {
+            context.yToast(context.getString(R.string.error_operation), MessageStatus.ERROR)
         }
     }
 
@@ -51,7 +56,11 @@ class FingerPrint(
                     CIPHERTEXT_WRAPPER
                 )
             }
-            context.yToast("ورود با موفقیت انجام شد", MessageStatus.SUCCESS)
+            listener.onSuccess()
         }
+    }
+
+    interface OnActionListener{
+        fun onSuccess()
     }
 }
