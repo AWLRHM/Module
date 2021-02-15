@@ -27,7 +27,7 @@ class FingerPrint(
             else false
         }
 
-    fun use() {
+    fun show() {
         try {
             if (hasFingerPrint) {
                 val secretKeyName = context.getString(R.string.secret_key_name)
