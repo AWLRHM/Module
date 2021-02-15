@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import ir.awlrhm.modules.extensions.showDatePicker
-import ir.awlrhm.modules.extensions.showSecurityErrorDialog
 import ir.awrhm.awlrhmmodule.R
 import kotlinx.android.synthetic.main.activity_main.*
 

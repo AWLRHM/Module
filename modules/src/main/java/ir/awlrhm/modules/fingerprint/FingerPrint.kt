@@ -1,7 +1,7 @@
 package ir.awlrhm.modules.fingerprint
 
-import android.app.Application
 import android.content.Context
+import android.os.Build
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.biometric.BiometricManager
@@ -9,6 +9,7 @@ import androidx.biometric.BiometricPrompt
 import ir.awlrhm.modules.extensions.yToast
 import ir.awrhm.modules.R
 import ir.awrhm.modules.enums.MessageStatus
+
 
 class FingerPrint(
     private val context: Context
@@ -18,13 +19,15 @@ class FingerPrint(
     private val TAG = "EnableBiometricLogin"
     private var canAuthenticate: Int = BiometricManager.from(context).canAuthenticate()
 
-    val hasFingerprint: Boolean
+    val hasFingerPrint: Boolean
         get() {
-            return canAuthenticate == BiometricManager.BIOMETRIC_SUCCESS
+            return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+                canAuthenticate == BiometricManager.BIOMETRIC_SUCCESS
+            else false
         }
 
     fun AppCompatActivity.use() {
-        if (hasFingerprint) {
+        if (hasFingerPrint) {
             val secretKeyName = getString(R.string.secret_key_name)
             cryptographyManager = CryptographyManager()
             val cipher = cryptographyManager.getInitializedCipherForEncryption(secretKeyName)

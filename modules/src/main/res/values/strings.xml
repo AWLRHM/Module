@@ -30,6 +30,9 @@
     <string name="is_exist_reverse_engineering_tools">برنامه به دلیل وجود اپلیکیشن های غیرامن و مخرب برروی دستگاه شما قادر به پاسخگویی نمی باشد.</string>
     <string name="parallel_space_app_exist">برنامه های  ParallelSpace</string>
     <string name="is_exist_parallel_space_app">به دلیل وجود اپلیکیشن های مخرب برروی گوشی شما، برنامه قادر به پاسخگویی نمی باشد.</string>
+    <string name="secret_key_name">biometric_sample_encryption_key</string>
+    <string name="prompt_info_title">ورود با اثر انگشت</string>
+    <string name="prompt_info_subtitle">اثر انگشت خود را برای ورود دوعاملی در قسمت حسگر اثرانگشت قرار دهید</string>
 
 
 </resources>
