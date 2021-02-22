@@ -168,3 +168,17 @@ fun Activity.checkReadPhoneState(callback: OnPermissionListener){
         }).check()
 }
 
+fun Activity.successOperation(message: String? = getString(R.string.success_operation)){
+    yToast(
+        message ?: getString(R.string.success_operation) ,
+        MessageStatus.SUCCESS
+    )
+}
+
+fun Activity.failureOperation(message: String? = getString(R.string.failed_operation)){
+    yToast(
+        message ?: getString(R.string.failed_operation),
+        MessageStatus.ERROR
+    )
+}
+

@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import ir.awrhm.modules.R
-import ir.awlrhm.modules.models.ItemModel
 import ir.awlrhm.modules.models.Adapter
+import ir.awlrhm.modules.models.ItemModel
+import ir.awrhm.modules.R
 import kotlinx.android.synthetic.main.awlrhm_dialog_choose.*
 
 class ChooseDialog constructor(
@@ -26,6 +26,17 @@ class ChooseDialog constructor(
         list,
         R.color.white,
         R.color.cyan_500, callback
+    )
+
+    constructor(
+        list: MutableList<ItemModel>,
+        backgroundColor: Int,
+        callback: (ItemModel) -> Unit
+    ) : this(
+        list,
+        R.color.white,
+        backgroundColor,
+        callback
     )
 
     override fun onCreateView(

@@ -35,6 +35,8 @@
     <string name="prompt_info_subtitle">اثر انگشت خود را برای ورود دوعاملی در قسمت حسگر اثرانگشت قرار دهید</string>
     <string name="prompt_info_use_app_password">ورود با نام کاربری</string>
     <string name="error_operation">خطا در انجام عملیات</string>
+    <string name="success_operation">عملیات با موفقیت انجام شد</string>
+    <string name="failed_operation">عملیات ناموفق بود.. مجددا تلاش کنید</string>
 
 
 </resources>

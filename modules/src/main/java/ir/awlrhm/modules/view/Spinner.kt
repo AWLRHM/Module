@@ -74,6 +74,7 @@ class Spinner(context: Context, attrs: AttributeSet) : ConstraintLayout(context,
     fun showData(
         list: MutableList<ItemModel>,
         activity: FragmentActivity,
+        color: Int = R.color.cyan_500,
         callback: (ItemModel) -> Unit
     ) {
         loading(false)
@@ -84,7 +85,7 @@ class Spinner(context: Context, attrs: AttributeSet) : ConstraintLayout(context,
                 callback.invoke(list[0])
 
             }
-            else -> ChooseDialog(list) {
+            else -> ChooseDialog(list, color) {
                 txtSpinner?.text = it.title
                 callback.invoke(it)
             }.show(activity.supportFragmentManager, ChooseDialog.TAG)
