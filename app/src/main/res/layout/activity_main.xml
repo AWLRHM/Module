@@ -35,4 +35,12 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/btn"/>
 
+    <ir.awlrhm.modules.done.Done
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/rclItem"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:dn_color="@color/black"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

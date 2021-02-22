@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
                 }
             })
             if(fingerPrint.hasFingerPrint)
-                fingerPrint.use()
+                fingerPrint.show()
             else
                 yToast("no Fingerprint", MessageStatus.ERROR)
         }
