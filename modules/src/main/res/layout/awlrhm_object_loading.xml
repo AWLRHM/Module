@@ -5,18 +5,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/imgDone"
+        android:id="@+id/imgObject"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/circle_white"
         android:tint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_done" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ProgressBar
-        android:id="@+id/prcDone"
+        android:id="@+id/progress"
         android:layout_width="@dimen/progress_menu"
         android:layout_height="@dimen/progress_menu"
         app:layout_constraintTop_toTopOf="parent"

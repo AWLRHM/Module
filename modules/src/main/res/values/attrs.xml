@@ -41,7 +41,18 @@
     </declare-styleable>
 
 
-    <declare-styleable name="Done">
-        <attr name="dn_color" format="integer|reference" />
+    <declare-styleable name="ObjectLoading">
+        <attr name="obl_color" format="integer|reference" />
+        <attr name="obl_source" format="integer|reference" />
+        <attr name="obl_hasBorder" format="enum">
+            <enum name="TRUE" value="1" />
+            <enum name="FALSE" value="0" />
+        </attr>
+        <attr name="obl_borderColor" format="enum">
+            <enum name="WHITE" value="0"/>
+            <enum name="BLACK" value="1"/>
+            <enum name="BLUE" value="2"/>
+            <enum name="ORANGE" value="3"/>
+        </attr>
     </declare-styleable>
 </resources>

@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ir.awlrhm.awlrhmmodule.MainActivity">
+    tools:context="ir.awlrhm.awlrhmmodule.MainActivity"
+    android:background="@color/black">
 
     <ir.awlrhm.modules.view.DatePicker
         android:id="@+id/picker"
@@ -35,12 +36,14 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/btn"/>
 
-    <ir.awlrhm.modules.done.Done
+    <ir.awlrhm.modules.objectLoading.ObjectLoading
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/rclItem"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:dn_color="@color/black"/>
+        app:obl_source="@drawable/ic_bulb"
+        app:obl_color="@color/blue_500"
+        app:obl_borderColor="BLUE"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
