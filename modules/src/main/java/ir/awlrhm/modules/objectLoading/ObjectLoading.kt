@@ -2,19 +2,16 @@ package ir.awlrhm.modules.objectLoading
 
 import android.content.Context
 import android.graphics.Color
-import android.os.Build
 import android.util.AttributeSet
 import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
-import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import ir.awlrhm.modules.extensions.configProgressbar
 import ir.awrhm.modules.R
 
-@RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 class ObjectLoading(context: Context, attrs: AttributeSet) : ConstraintLayout(context, attrs) {
 
     private var hasBorder: Int = 0
