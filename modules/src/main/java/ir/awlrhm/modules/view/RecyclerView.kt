@@ -22,6 +22,7 @@ class RecyclerView(context: Context, attrs: AttributeSet) : FrameLayout(context,
 
     private var recyclerView: RecyclerView? = null
     private var progress: ProgressBar? = null
+    private var prcPaging: ProgressBar? = null
     private var noData: View? = null
     private var btnRetry: MaterialButton? = null
     var isOnLoading: Boolean = true
@@ -30,7 +31,8 @@ class RecyclerView(context: Context, attrs: AttributeSet) : FrameLayout(context,
     init {
         val view = View.inflate(context, R.layout.awlrhm_recycler_view, this)
         recyclerView = view.findViewById(R.id.recyclerView)
-        progress = view.findViewById(R.id.recyclerProgress)
+        progress = view.findViewById(R.id.prcRecycler)
+        prcPaging = view.findViewById(R.id.prcPaging)
         noData = view.findViewById(R.id.noData)
         btnRetry = view.findViewById(R.id.btnRetry)
         btnRetry?.setOnClickListener {
@@ -54,6 +56,10 @@ class RecyclerView(context: Context, attrs: AttributeSet) : FrameLayout(context,
             )
 
         )
+    }
+
+    fun paging(visible: Boolean){
+        prcPaging?.isVisible = visible
     }
 
     private fun setGridItemDecoration(horizontalDivider: Int = 0, verticalDevider: Int = 0) {

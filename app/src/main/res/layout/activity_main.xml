@@ -33,7 +33,7 @@
     <ir.awlrhm.modules.view.RecyclerView
         android:id="@+id/rclItem"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         app:layout_constraintTop_toBottomOf="@id/btn"/>
 
     <ir.awlrhm.modules.objectLoading.ObjectLoading

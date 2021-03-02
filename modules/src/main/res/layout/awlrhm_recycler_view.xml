@@ -5,16 +5,34 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ProgressBar
-        android:id="@+id/recyclerProgress"
+        android:id="@+id/prcRecycler"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"/>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layoutDirection="rtl"/>
+        android:layout_height="0dp"
+        android:layoutDirection="rtl"
+        app:layout_constraintBottom_toTopOf="@id/prcPaging"/>
+
+        <ProgressBar
+            android:id="@+id/prcPaging"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="@dimen/guid_line"
+            android:layout_marginTop="@dimen/guid_line"
+            android:visibility="gone"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/noData"
