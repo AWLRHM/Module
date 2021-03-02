@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.loading.view.*
 class RecyclerView(context: Context, attrs: AttributeSet) : FrameLayout(context, attrs) {
 
     private var recyclerView: RecyclerView? = null
-    private var progress: ProgressBar? = null
+    private var prcLoading: ProgressBar? = null
     private var prcPaging: ProgressBar? = null
     private var noData: View? = null
     private var btnRetry: MaterialButton? = null
@@ -31,7 +31,7 @@ class RecyclerView(context: Context, attrs: AttributeSet) : FrameLayout(context,
     init {
         val view = View.inflate(context, R.layout.awlrhm_recycler_view, this)
         recyclerView = view.findViewById(R.id.recyclerView)
-        progress = view.findViewById(R.id.prcRecycler)
+        prcLoading = view.findViewById(R.id.prcLoading)
         prcPaging = view.findViewById(R.id.prcPaging)
         noData = view.findViewById(R.id.noData)
         btnRetry = view.findViewById(R.id.btnRetry)
@@ -85,7 +85,7 @@ class RecyclerView(context: Context, attrs: AttributeSet) : FrameLayout(context,
     val view: RecyclerView?
         get() {
             isOnLoading = false
-            progress?.isVisible = false
+            prcLoading?.isVisible = false
             recyclerView?.isVisible = true
             noData?.isVisible = false
             return recyclerView
@@ -93,7 +93,7 @@ class RecyclerView(context: Context, attrs: AttributeSet) : FrameLayout(context,
 
     fun showNoData() {
         listener?.let { btnRetry?.isVisible = true }
-        progress?.isVisible = false
+        prcLoading?.isVisible = false
         waitLoading.isVisible = false
         recyclerView?.isVisible = false
         noData?.isVisible = true
@@ -101,7 +101,7 @@ class RecyclerView(context: Context, attrs: AttributeSet) : FrameLayout(context,
 
     fun showLoading() {
         noData?.isVisible = false
-        progress?.isVisible = true
+        prcLoading?.isVisible = true
         recyclerView?.isVisible = false
     }
 
@@ -146,12 +146,16 @@ class RecyclerView(context: Context, attrs: AttributeSet) : FrameLayout(context,
         setGridItemDecoration(horizontalResId, verticalResId)
     }
 
-    fun themeColor(color: Int) = apply { progress?.let {
+    fun theme(color: Int) = apply {
+       val prcPaging = prcPaging ?: return@apply
+       val prcLoading = prcLoading ?: return@apply
+
         waitLoading.txtWait.setTextColor(ContextCompat.getColor(context, color))
         context.configProgressbar(waitLoading.prcWait, color)
+        context.configProgressbar(prcLoading, color)
+        context.configProgressbar(prcPaging, color)
+    }
 
-        context.configProgressbar(it, color)
-    }}
     fun layoutManager(manager: LinearLayoutManager) = apply { configRecyclerView(manager) }
 
     fun animation(animation: Int = 0) = apply { setAnimation(animation) }
