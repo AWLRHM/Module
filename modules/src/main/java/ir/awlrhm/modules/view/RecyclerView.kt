@@ -22,7 +22,6 @@ class RecyclerView(context: Context, attrs: AttributeSet) : FrameLayout(context,
 
     private var recyclerView: RecyclerView? = null
     private var prcLoading: ProgressBar? = null
-    private var prcPaging: ProgressBar? = null
     private var noData: View? = null
     private var btnRetry: MaterialButton? = null
     var isOnLoading: Boolean = true
@@ -32,7 +31,6 @@ class RecyclerView(context: Context, attrs: AttributeSet) : FrameLayout(context,
         val view = View.inflate(context, R.layout.awlrhm_recycler_view, this)
         recyclerView = view.findViewById(R.id.recyclerView)
         prcLoading = view.findViewById(R.id.prcLoading)
-        prcPaging = view.findViewById(R.id.prcPaging)
         noData = view.findViewById(R.id.noData)
         btnRetry = view.findViewById(R.id.btnRetry)
         btnRetry?.setOnClickListener {
@@ -56,10 +54,6 @@ class RecyclerView(context: Context, attrs: AttributeSet) : FrameLayout(context,
             )
 
         )
-    }
-
-    fun paging(visible: Boolean){
-        prcPaging?.isVisible = visible
     }
 
     private fun setGridItemDecoration(horizontalDivider: Int = 0, verticalDevider: Int = 0) {
@@ -112,6 +106,15 @@ class RecyclerView(context: Context, attrs: AttributeSet) : FrameLayout(context,
     set(value){
         waitLoading.isVisible = value
     }
+
+    var paging: Boolean
+        get(){
+            return prcPaging.isVisible
+        }
+        set(value){
+            prcPaging.isVisible = value
+        }
+
 
     fun clear(){
         recyclerView?.removeAllViews()

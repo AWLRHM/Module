@@ -19,7 +19,10 @@ class MainActivity : AppCompatActivity() {
 
             }
         }
-        rclItem.layoutManager(LinearLayoutManager(this))
+        rclItem
+            .layoutManager(LinearLayoutManager(this))
+            .theme(R.color.pink_500)
+
         rclItem.view?.adapter = Adapter(
             mutableListOf(
                 TestModel("test 1"),
@@ -28,10 +31,10 @@ class MainActivity : AppCompatActivity() {
         )
         btn.setOnClickListener {
             if (paging) {
-                rclItem.paging(false)
+                rclItem.paging = false
                 paging = false
             }else{
-                rclItem.paging(true)
+                rclItem.paging = true
                 paging = true
             }
         }
