@@ -1,4 +1,4 @@
-package ir.awlrhm.modules.view
+package ir.awlrhm.modules.view.searchablePagingDialog
 
 import android.content.DialogInterface
 import android.os.Bundle
@@ -15,6 +15,7 @@ import ir.awrhm.modules.R
 import ir.awrhm.modules.enums.MessageStatus
 import ir.awlrhm.modules.extensions.hideKeyboard
 import ir.awlrhm.modules.extensions.yToast
+import ir.awlrhm.modules.view.RecyclerView
 import kotlinx.android.synthetic.main.awlrhm_searchable_dialog.*
 
 class SearchablePagingDialog<T>(
