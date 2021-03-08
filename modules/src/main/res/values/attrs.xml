@@ -11,6 +11,7 @@
     <declare-styleable name="Spinner">
         <attr name="sp_title" format="string|reference" />
         <attr name="sp_titleColor" format="integer|reference" />
+        <attr name="sp_loadingColor" format="integer|reference" />
         <attr name="sp_hint" format="string|reference" />
         <attr name="sp_border" format="integer|reference" />
         <attr name="sp_background" format="integer|reference" />

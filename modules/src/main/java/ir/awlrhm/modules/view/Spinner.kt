@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
+import ir.awlrhm.modules.extensions.configProgressbar
 import ir.awlrhm.modules.models.ItemModel
 import ir.awrhm.modules.R
 import kotlinx.android.synthetic.main.awlrhm_spinner.view.*
@@ -53,6 +54,7 @@ class Spinner(context: Context, attrs: AttributeSet) : ConstraintLayout(context,
             context,
             attributes.getResourceId(R.styleable.Spinner_sp_background, R.color.white)
         ))
+        progress?.let {  context.configProgressbar(it,  attributes.getResourceId(R.styleable.Spinner_sp_background, R.color.cyan_500)) }
     }
 
     val isLoading: Boolean
