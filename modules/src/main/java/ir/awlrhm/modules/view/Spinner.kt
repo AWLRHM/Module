@@ -54,7 +54,7 @@ class Spinner(context: Context, attrs: AttributeSet) : ConstraintLayout(context,
             context,
             attributes.getResourceId(R.styleable.Spinner_sp_background, R.color.white)
         ))
-        progress?.let {  context.configProgressbar(it,  attributes.getResourceId(R.styleable.Spinner_sp_background, R.color.cyan_500)) }
+        progress?.let {  context.configProgressbar(it,  attributes.getResourceId(R.styleable.Spinner_sp_loadingColor, R.color.cyan_500)) }
     }
 
     val isLoading: Boolean

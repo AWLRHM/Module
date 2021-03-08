@@ -14,11 +14,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        picker.setOnClickListener {
-            showDatePicker {
-
-            }
-        }
+      spinner.setOnClickListener { spinner.loading(true) }
         rclItem
             .layoutManager(LinearLayoutManager(this))
             .theme(R.color.pink_500)
