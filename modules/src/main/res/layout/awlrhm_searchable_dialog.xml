@@ -52,6 +52,7 @@
                 android:textColor="@color/black"
                 android:textCursorDrawable="@null"
                 android:textSize="@dimen/textAppearanceSubtitle2"
+                android:imeOptions="actionSearch"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/btnBack"
                 app:layout_constraintStart_toEndOf="@id/btnSearch"

@@ -80,6 +80,7 @@ class SearchablePagingDialog<T>(
         val activity = activity ?: return
 
         btnBack.setOnClickListener {
+
             dismiss()
         }
         btnSearch.setOnClickListener {

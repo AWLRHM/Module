@@ -6,6 +6,7 @@ import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.FrameLayout
 import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,12 +27,17 @@ class RecyclerView(context: Context, attrs: AttributeSet) : FrameLayout(context,
     private var btnRetry: MaterialButton? = null
     var isOnLoading: Boolean = true
     private var listener: OnActionListener?= null
+    private var txtWait: TextView ?= null
+    private var prcWait: ProgressBar?= null
+
 
     init {
         val view = View.inflate(context, R.layout.awlrhm_recycler_view, this)
         recyclerView = view.findViewById(R.id.recyclerView)
         prcLoading = view.findViewById(R.id.prcLoading)
         noData = view.findViewById(R.id.noData)
+        prcWait = view.findViewById(R.id.prcWait)
+        txtWait = view.findViewById(R.id.txtWait)
         btnRetry = view.findViewById(R.id.btnRetry)
         btnRetry?.setOnClickListener {
             listener?.onRefresh()
@@ -152,9 +158,11 @@ class RecyclerView(context: Context, attrs: AttributeSet) : FrameLayout(context,
     fun theme(color: Int) = apply {
        val prcPaging = prcPaging ?: return@apply
        val prcLoading = prcLoading ?: return@apply
+        val txtWait = txtWait ?: return@apply
+        val prcWait = prcWait ?: return@apply
 
-        waitLoading.txtWait.setTextColor(ContextCompat.getColor(context, color))
-        context.configProgressbar(waitLoading.prcWait, color)
+        txtWait.setTextColor(ContextCompat.getColor(context, color))
+        context.configProgressbar(prcWait, color)
         context.configProgressbar(prcLoading, color)
         context.configProgressbar(prcPaging, color)
     }

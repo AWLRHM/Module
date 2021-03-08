@@ -30,13 +30,7 @@ class MainActivity : AppCompatActivity() {
             )
         )
         btn.setOnClickListener {
-            if (paging) {
-                rclItem.paging = false
-                paging = false
-            }else{
-                rclItem.paging = true
-                paging = true
-            }
+           rclItem.actionLoading = true
         }
     }
 }
