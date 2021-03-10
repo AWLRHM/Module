@@ -7,6 +7,7 @@ import android.view.animation.AnimationUtils
 import android.widget.FrameLayout
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,8 +27,7 @@ class RecyclerView(context: Context, attrs: AttributeSet) : FrameLayout(context,
     private var noData: View? = null
     private var btnRetry: MaterialButton? = null
     private var listener: OnActionListener?= null
-//    private var txtWait: TextView ?= null
-//    private var prcWait: ProgressBar?= null
+    private var layoutLoading: ConstraintLayout?= null
     var isOnLoading: Boolean = true
 
 
@@ -36,12 +36,12 @@ class RecyclerView(context: Context, attrs: AttributeSet) : FrameLayout(context,
         recyclerView = view.findViewById(R.id.recyclerView)
         prcLoading = view.findViewById(R.id.prcLoading)
         noData = view.findViewById(R.id.noData)
-//        prcWait = view.findViewById(R.id.prcWait)
-//        txtWait = view.findViewById(R.id.txtWait)
+        layoutLoading = view.findViewById(R.id.layoutLoading)
         btnRetry = view.findViewById(R.id.btnRetry)
         btnRetry?.setOnClickListener {
             listener?.onRefresh()
         }
+
     }
 
     private fun configRecyclerView(
@@ -94,7 +94,7 @@ class RecyclerView(context: Context, attrs: AttributeSet) : FrameLayout(context,
     fun showNoData() {
         listener?.let { btnRetry?.isVisible = true }
         prcLoading?.isVisible = false
-        waitLoading.isVisible = false
+        layoutLoading?.isVisible = false
         recyclerView?.isVisible = false
         noData?.isVisible = true
     }
@@ -107,10 +107,10 @@ class RecyclerView(context: Context, attrs: AttributeSet) : FrameLayout(context,
 
     var actionLoading: Boolean
     get(){
-        return waitLoading.isVisible
+        return layoutLoading?.isVisible ?: false
     }
     set(value){
-        waitLoading.isVisible = value
+        layoutLoading?.isVisible = value
     }
 
     var paging: Boolean
@@ -158,11 +158,13 @@ class RecyclerView(context: Context, attrs: AttributeSet) : FrameLayout(context,
     fun theme(color: Int) = apply {
        val prcPaging = prcPaging ?: return@apply
        val prcLoading = prcLoading ?: return@apply
-//        val txtWait = txtWait ?: return@apply
-//        val prcWait = prcWait ?: return@apply
+        val txtWait = layoutLoading?.findViewById<TextView>(R.id.txtWait)
+        val prcWait = layoutLoading?.findViewById<ProgressBar>(R.id.prcWait)
+        val progressWait = prcWait ?: return@apply
+        val textWait = txtWait ?: return@apply
 
-//        txtWait.setTextColor(ContextCompat.getColor(context, color))
-//        context.configProgressbar(prcWait, color)
+        textWait.setTextColor(ContextCompat.getColor(context, color))
+        context.configProgressbar(progressWait, color)
         context.configProgressbar(prcLoading, color)
         context.configProgressbar(prcPaging, color)
     }

@@ -71,7 +71,7 @@
     </androidx.appcompat.widget.LinearLayoutCompat>
 
    <include
-       android:id="@+id/waitLoading"
+       android:id="@+id/layoutLoading"
        layout="@layout/loading"
        android:visibility="gone"/>
 </FrameLayout>
