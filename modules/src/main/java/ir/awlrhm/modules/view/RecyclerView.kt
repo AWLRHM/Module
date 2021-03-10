@@ -25,10 +25,10 @@ class RecyclerView(context: Context, attrs: AttributeSet) : FrameLayout(context,
     private var prcLoading: ProgressBar? = null
     private var noData: View? = null
     private var btnRetry: MaterialButton? = null
-    var isOnLoading: Boolean = true
     private var listener: OnActionListener?= null
-    private var txtWait: TextView ?= null
-    private var prcWait: ProgressBar?= null
+//    private var txtWait: TextView ?= null
+//    private var prcWait: ProgressBar?= null
+    var isOnLoading: Boolean = true
 
 
     init {
@@ -36,8 +36,8 @@ class RecyclerView(context: Context, attrs: AttributeSet) : FrameLayout(context,
         recyclerView = view.findViewById(R.id.recyclerView)
         prcLoading = view.findViewById(R.id.prcLoading)
         noData = view.findViewById(R.id.noData)
-        prcWait = view.findViewById(R.id.prcWait)
-        txtWait = view.findViewById(R.id.txtWait)
+//        prcWait = view.findViewById(R.id.prcWait)
+//        txtWait = view.findViewById(R.id.txtWait)
         btnRetry = view.findViewById(R.id.btnRetry)
         btnRetry?.setOnClickListener {
             listener?.onRefresh()
@@ -158,11 +158,11 @@ class RecyclerView(context: Context, attrs: AttributeSet) : FrameLayout(context,
     fun theme(color: Int) = apply {
        val prcPaging = prcPaging ?: return@apply
        val prcLoading = prcLoading ?: return@apply
-        val txtWait = txtWait ?: return@apply
-        val prcWait = prcWait ?: return@apply
+//        val txtWait = txtWait ?: return@apply
+//        val prcWait = prcWait ?: return@apply
 
-        txtWait.setTextColor(ContextCompat.getColor(context, color))
-        context.configProgressbar(prcWait, color)
+//        txtWait.setTextColor(ContextCompat.getColor(context, color))
+//        context.configProgressbar(prcWait, color)
         context.configProgressbar(prcLoading, color)
         context.configProgressbar(prcPaging, color)
     }
