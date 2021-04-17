@@ -96,26 +96,11 @@ class PersianDatePicker extends LinearLayout {
         descriptionTextView = view.findViewById(R.id.descriptionTextView);
 
 
-        yearNumberPicker.setFormatter(new NumberPicker.Formatter() {
-            @Override
-            public String format(int i) {
-                return PersianHelper.toPersianNumber(i + "");
-            }
-        });
+        yearNumberPicker.setFormatter(i -> PersianHelper.toPersianNumber(i + ""));
 
-        monthNumberPicker.setFormatter(new NumberPicker.Formatter() {
-            @Override
-            public String format(int i) {
-                return PersianHelper.toPersianNumber(i + "");
-            }
-        });
+        monthNumberPicker.setFormatter(i -> PersianHelper.toPersianNumber(i + ""));
 
-        dayNumberPicker.setFormatter(new NumberPicker.Formatter() {
-            @Override
-            public String format(int i) {
-                return PersianHelper.toPersianNumber(i + "");
-            }
-        });
+        dayNumberPicker.setFormatter(i -> PersianHelper.toPersianNumber(i + ""));
 
         // init calendar
         pCalendar = new PersianCalendar();

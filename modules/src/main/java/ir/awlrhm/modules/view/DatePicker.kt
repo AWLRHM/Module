@@ -26,9 +26,7 @@ class DatePicker(context: Context, attrs: AttributeSet) : FrameLayout(context, a
         border = view.findViewById(R.id.layoutBorder)
 
         val attributes = context.obtainStyledAttributes(attrs, R.styleable.DatePicker)
-        txtTitle?.text = attributes.getString(
-            R.styleable.DatePicker_dp_title
-        )
+        txtTitle?.text = attributes.getString(R.styleable.DatePicker_dp_title)
         txtTitle?.setTextColor(
             attributes.getColor(
                 R.styleable.DatePicker_dp_titleColor,

@@ -274,38 +274,32 @@ public class PersianDatePickerDialog {
             }
         });
 
-        positiveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (listener != null) {
-                    listener.onDateSelected(datePicker.getDisplayPersianDate());
-                }
-                dialog.dismiss();
+        positiveButton.setOnClickListener(view -> {
+            if (listener != null) {
+                listener.onDateSelected(datePicker.getDisplayPersianDate());
             }
+            dialog.dismiss();
         });
 
-        todayButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        todayButton.setOnClickListener(view -> {
 
-                datePicker.setDisplayDate(new Date());
+            datePicker.setDisplayDate(new Date());
 
-                if (maxYear > 0) {
-                    datePicker.setMaxYear(maxYear);
-                }
-
-                if (minYear > 0) {
-                    datePicker.setMinYear(minYear);
-                }
-
-                pCalendar = datePicker.getDisplayPersianDate();
-                dateText.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        updateView(dateText);
-                    }
-                }, 100);
+            if (maxYear > 0) {
+                datePicker.setMaxYear(maxYear);
             }
+
+            if (minYear > 0) {
+                datePicker.setMinYear(minYear);
+            }
+
+            pCalendar = datePicker.getDisplayPersianDate();
+            dateText.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    updateView(dateText);
+                }
+            }, 100);
         });
 
         dialog.show();

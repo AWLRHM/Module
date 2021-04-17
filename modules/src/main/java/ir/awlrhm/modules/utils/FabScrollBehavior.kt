@@ -6,7 +6,10 @@ import android.view.View
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class FabScrollBehavior(context: Context, attrs: AttributeSet): CoordinatorLayout.Behavior<FloatingActionButton> (context, attrs) {
+class FabScrollBehavior(context: Context, attrs: AttributeSet): CoordinatorLayout.Behavior<FloatingActionButton>(
+    context,
+    attrs
+) {
 
     override fun onStartNestedScroll(
         coordinatorLayout: CoordinatorLayout,
@@ -26,15 +29,27 @@ class FabScrollBehavior(context: Context, attrs: AttributeSet): CoordinatorLayou
         dyConsumed: Int,
         dxUnconsumed: Int,
         dyUnconsumed: Int,
-        type: Int
+        type: Int,
+        consumed: IntArray
     ) {
         super.onNestedScroll(
-            coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed,
-            dyUnconsumed, type
+            coordinatorLayout,
+            child,
+            target,
+            dxConsumed,
+            dyConsumed,
+            dxUnconsumed,
+            dyUnconsumed,
+            type,
+            consumed
         )
-
         if (dyConsumed > 0 && child.visibility == View.VISIBLE) {
-            child.hide()
+            child.hide(object : FloatingActionButton.OnVisibilityChangedListener() {
+                override fun onHidden(floatingActionButon: FloatingActionButton) {
+                    super.onShown(floatingActionButon)
+                    floatingActionButon.visibility = View.INVISIBLE
+                }
+            })
         } else if (dyConsumed < 0 && child.visibility != View.VISIBLE) {
             child.show()
         }
