@@ -21,6 +21,7 @@ import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.karumi.dexter.listener.single.PermissionListener
 import ir.awlrhm.modules.utils.OnPermissionListener
+import ir.awrhm.awrhm_flashbar.Flashbar
 import ir.awrhm.modules.R
 import ir.awrhm.modules.enums.MessageStatus
 import java.io.File
@@ -180,5 +181,75 @@ fun Activity.failureOperation(message: String? = getString(R.string.failed_opera
         message ?: getString(R.string.failed_operation),
         MessageStatus.ERROR
     )
+}
+
+fun Activity.showFlashbar(
+    title: String,
+    message: String,
+    backPressed: Boolean,
+    status: MessageStatus
+) {
+    Flashbar.Builder(this)
+        .gravity(Flashbar.Gravity.TOP)
+        .title(if (title.isEmpty()) getString(R.string.error) else title)
+        .icon(
+            when (status) {
+                MessageStatus.ERROR -> R.drawable.ic_warning
+                MessageStatus.SUCCESS -> R.drawable.ic_success
+                MessageStatus.INFORMATION -> R.drawable.ic_information
+            }
+        )
+        .titleColorRes(R.color.black)
+        .titleSizeInSp(16f)
+        .message(message)
+        .messageColorRes(R.color.black)
+        .backgroundDrawable(
+            when (status) {
+                MessageStatus.SUCCESS -> R.color.green_A400
+                MessageStatus.INFORMATION -> R.color.blue_500
+                MessageStatus.ERROR -> R.color.orange_500
+            }
+        )
+        .listenOutsideTaps(object : Flashbar.OnTapListener {
+            override fun onTap(flashbar: Flashbar) {
+                if (backPressed) {
+                    onBackPressed()
+                    flashbar.dismiss()
+                } else flashbar.dismiss()
+            }
+        })
+        .build()
+        .show()
+}
+
+fun Activity.showActionFlashbar(
+    title: String,
+    message: String,
+    okCallback: () -> Unit
+) {
+    Flashbar.Builder(this)
+        .gravity(Flashbar.Gravity.TOP)
+        .title(if (title.isEmpty()) getString(R.string.warning) else title)
+        .icon(R.drawable.ic_warning)
+        .titleColorRes(R.color.black)
+        .titleSizeInSp(16f)
+        .message(message)
+        .messageColorRes(R.color.black)
+        .backgroundDrawable(R.color.orange_500)
+        .positiveActionText(R.string.ok)
+        .negativeActionText(R.string.cancel)
+        .positiveActionTapListener(object : Flashbar.OnActionTapListener {
+            override fun onActionTapped(bar: Flashbar) {
+                okCallback.invoke()
+                bar.dismiss()
+            }
+        })
+        .negativeActionTapListener(object : Flashbar.OnActionTapListener {
+            override fun onActionTapped(bar: Flashbar) {
+                bar.dismiss()
+            }
+        })
+        .build()
+        .show()
 }
 

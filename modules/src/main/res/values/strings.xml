@@ -18,6 +18,7 @@
     <string name="please_wait">لطفا صبور باشید..</string>
     <string name="error">خطا</string>
     <string name="ok">تایید</string>
+    <string name="cancel">انصراف</string>
     <string name="wait">لطفا منتظر بمانید</string>
     <string name="security_problem">برنامه به دلیل مشکلات امنیتی دستگاه شما قادر به پاسخگویی نمی باشد.</string>
     <string name="downloading">در حال دانلود</string>
@@ -37,6 +38,8 @@
     <string name="error_operation">خطا در انجام عملیات</string>
     <string name="success_operation">عملیات با موفقیت انجام شد</string>
     <string name="failed_operation">عملیات ناموفق بود.. مجددا تلاش کنید</string>
+    <string name="enter_data">اطلاعات خود را وارد نمایید</string>
+    <string name="send">ارسال</string>
 
 
 </resources>
