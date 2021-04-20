@@ -48,6 +48,7 @@ class RegisterDataDialog(
         btnAction.text = if(action.isNotEmpty()) action else getString(R.string.send)
     }
 
+
     companion object {
         val TAG = "automation: ${RegisterDataDialog::class.java.simpleName}"
     }

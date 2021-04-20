@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import ir.awlrhm.modules.extensions.showDatePicker
+import ir.awlrhm.modules.models.DynamicModel
+import ir.awlrhm.modules.view.searchablePagingDialog.SearchablePagingDialog
 import ir.awrhm.awlrhmmodule.R
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -14,7 +16,22 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-      spinner.setOnClickListener { spinner.loading(true) }
+      spinner.setOnClickListener { SearchablePagingDialog(
+          object : SearchablePagingDialog.OnActionListener<String>{
+              override fun onSearchPaging(pageNumber: Int, search: String) {
+                  
+              }
+
+              override fun onChoose(model: DynamicModel<String>) {
+                  
+              }
+
+              override fun onDismiss() {
+                  
+              }
+          }
+      ).show(supportFragmentManager, SearchablePagingDialog.TAG)
+      }
         rclItem
             .layoutManager(GridLayoutManager(this,2))
             .theme(R.color.pink_500)

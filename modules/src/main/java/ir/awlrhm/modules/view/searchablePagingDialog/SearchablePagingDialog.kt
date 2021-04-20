@@ -14,6 +14,7 @@ import ir.awlrhm.modules.models.DynamicModel
 import ir.awrhm.modules.R
 import ir.awrhm.modules.enums.MessageStatus
 import ir.awlrhm.modules.extensions.hideKeyboard
+import ir.awlrhm.modules.extensions.showKeyboard
 import ir.awlrhm.modules.extensions.yToast
 import ir.awlrhm.modules.view.RecyclerView
 import kotlinx.android.synthetic.main.awlrhm_searchable_dialog.*
@@ -33,6 +34,9 @@ class SearchablePagingDialog<T>(
         rclItems
             .layoutManager(LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false))
             .verticalDecoration()
+
+        edtSearch.requestFocus()
+        activity?.showKeyboard()
     }
 
     override fun onCreateView(
