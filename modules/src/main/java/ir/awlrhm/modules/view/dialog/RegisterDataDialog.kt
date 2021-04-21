@@ -49,6 +49,16 @@ class RegisterDataDialog(
     }
 
 
+    override fun onStart() {
+        super.onStart()
+        dialog?.let {
+            it.window?.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
+        }
+    }
+
     companion object {
         val TAG = "automation: ${RegisterDataDialog::class.java.simpleName}"
     }
