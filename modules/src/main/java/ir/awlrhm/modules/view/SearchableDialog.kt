@@ -41,7 +41,7 @@ class SearchableDialog(
         super.onViewCreated(view, savedInstanceState)
     }
 
-    override fun handleEvents() {
+    override fun handleOnClickListener()  {
         btnBack.setOnClickListener {
             if (edtSearch.text.toString().isEmpty())
                 dismiss()
