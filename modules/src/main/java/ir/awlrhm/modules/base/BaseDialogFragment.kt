@@ -11,7 +11,7 @@ abstract class BaseDialogFragment: DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setup()
-        handleEvents()
+        handleOnClickListener()
     }
 
     override fun onStart() {
@@ -25,5 +25,5 @@ abstract class BaseDialogFragment: DialogFragment() {
     }
 
     abstract fun setup()
-    open fun handleEvents(){}
+    open fun handleOnClickListener(){}
 }

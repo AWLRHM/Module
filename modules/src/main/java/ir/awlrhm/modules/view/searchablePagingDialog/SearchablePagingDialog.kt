@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import androidx.core.view.isVisible
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import ir.awlrhm.modules.base.BaseDialogFragment
 import ir.awlrhm.modules.enums.Status
@@ -50,7 +52,6 @@ class SearchablePagingDialog<T>(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initAdapter()
-        handleEvents()
     }
 
     private fun initAdapter() {
@@ -80,26 +81,35 @@ class SearchablePagingDialog<T>(
         rclItems.view?.adapter = adapter
     }
 
-    override fun handleEvents() {
-        val activity = activity ?: return
-
-        btnBack.setOnClickListener {
-
+    override fun handleOnClickListener() {
+         btnBack.setOnClickListener {
             dismiss()
         }
         btnSearch.setOnClickListener {
-            if (!rclItems.isOnLoading) {
-                val search = edtSearch.text.toString()
-                if (search.isNotEmpty()) {
-                    activity.hideKeyboard(edtSearch)
-                    status(Status.LOADING, isPaging = false)
-                    callbackStatus = CallbackStatus.SEARCH
-                    listener.onSearchPaging(1, search)
-                } else
-                    activity.yToast(getString(R.string.enter_search_word), MessageStatus.ERROR)
-            } else
-                activity.yToast(getString(R.string.please_wait), MessageStatus.INFORMATION)
+            doSearch()
         }
+        edtSearch.setOnEditorActionListener { _, actionId, _ ->
+            if(actionId == EditorInfo.IME_ACTION_SEARCH){
+                doSearch()
+                true
+
+            }else false
+        }
+    }
+
+    private fun doSearch() {
+        val activity = activity ?: return
+        if (!rclItems.isOnLoading) {
+            val search = edtSearch.text.toString()
+            if (search.isNotEmpty()) {
+                activity.hideKeyboard(edtSearch)
+                status(Status.LOADING, isPaging = false)
+                callbackStatus = CallbackStatus.SEARCH
+                listener.onSearchPaging(1, search)
+            } else
+                activity.yToast(getString(R.string.enter_search_word), MessageStatus.ERROR)
+        } else
+            activity.yToast(getString(R.string.please_wait), MessageStatus.INFORMATION)
     }
 
     fun setSource(totalCount: Long, list: MutableList<DynamicModel<T>>) {
