@@ -13,7 +13,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
-import ir.awlrhm.modules.extensions.configProgressbar
+import ir.awlrhm.modules.extentions.configProgressbar
 import ir.awrhm.modules.R
 import ir.awrhm.modules.utils.GridItemDecoration
 import ir.financialworld.masterstock.utils.VerticalItemDecoration

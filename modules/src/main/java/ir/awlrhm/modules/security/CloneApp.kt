@@ -1,7 +1,7 @@
 package ir.awlrhm.modules.security
 
 import android.content.Context
-import ir.awlrhm.modules.extensions.isPackageInstalled
+import ir.awlrhm.modules.extentions.isPackageInstalled
 
 class CloneApp {
     fun isInstalled(context: Context): Boolean{

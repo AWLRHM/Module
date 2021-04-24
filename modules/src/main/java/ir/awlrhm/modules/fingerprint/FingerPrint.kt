@@ -6,7 +6,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
-import ir.awlrhm.modules.extensions.yToast
+import ir.awlrhm.modules.extentions.yToast
 import ir.awrhm.modules.R
 import ir.awrhm.modules.enums.MessageStatus
 

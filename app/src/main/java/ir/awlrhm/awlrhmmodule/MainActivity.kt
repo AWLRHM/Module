@@ -3,8 +3,6 @@ package ir.awlrhm.awlrhmmodule
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import ir.awlrhm.modules.extensions.showDatePicker
 import ir.awlrhm.modules.models.DynamicModel
 import ir.awlrhm.modules.view.searchablePagingDialog.SearchablePagingDialog
 import ir.awrhm.awlrhmmodule.R

@@ -9,7 +9,7 @@ import android.widget.ProgressBar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
-import ir.awlrhm.modules.extensions.configProgressbar
+import ir.awlrhm.modules.extentions.configProgressbar
 import ir.awrhm.modules.R
 
 class ObjectLoading(context: Context, attrs: AttributeSet) : ConstraintLayout(context, attrs) {

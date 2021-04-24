@@ -4,7 +4,7 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import androidx.fragment.app.FragmentActivity
-import ir.awlrhm.modules.extensions.yToast
+import ir.awlrhm.modules.extentions.yToast
 import ir.awlrhm.modules.log.database.AWLRHMDatabaseHelper
 import ir.awlrhm.modules.log.investigation.Crash
 import ir.awlrhm.modules.log.viewmodel.CrashViewModel

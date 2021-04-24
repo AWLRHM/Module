@@ -10,8 +10,8 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import ir.awrhm.modules.R
 import ir.awlrhm.modules.base.BaseDialogFragment
-import ir.awlrhm.modules.extensions.configImageButton
-import ir.awlrhm.modules.extensions.hideKeyboard
+import ir.awlrhm.modules.extentions.configImageButton
+import ir.awlrhm.modules.extentions.hideKeyboard
 import ir.awlrhm.modules.models.ItemModel
 import ir.awlrhm.modules.models.Adapter
 import kotlinx.android.synthetic.main.awlrhm_searchable_dialog.*

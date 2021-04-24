@@ -1,4 +1,4 @@
-package ir.awlrhm.modules.extensions
+package ir.awlrhm.modules.extentions
 
 import android.annotation.SuppressLint
 import android.content.Context
