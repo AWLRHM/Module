@@ -3,9 +3,15 @@ package ir.awlrhm.modules.extensions
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.util.Base64
 import android.util.Base64OutputStream
-import ir.awlrhm.modules.view.Spinner
+import androidx.core.content.res.ResourcesCompat
+import androidx.fragment.app.FragmentActivity
+import ir.awlrhm.modules.utils.calendar.PersianCalendar
+import ir.awlrhm.modules.view.datePicker.CalendarActionListener
+import ir.awlrhm.modules.view.datePicker.PersianDatePickerDialog
+import ir.awrhm.modules.R
 import java.io.*
 import java.util.*
 
@@ -224,3 +230,27 @@ fun isPackageInstalled(packageName: String, pm: PackageManager): Boolean {
         false
     }
 }
+
+fun FragmentActivity.showDateDialog(
+    callback: (String) -> Unit
+) {
+    PersianDatePickerDialog(this)
+        .setPositiveButtonString(getString(R.string.ok))
+        .setNegativeButton(getString(R.string.cancel))
+        .setTodayButton(getString(R.string.today))
+        .setTodayButtonVisible(true)
+        .setMinYear(1350)
+        .setMaxYear(PersianDatePickerDialog.THIS_YEAR)
+//        .setInitDate(initDate)
+        .setActionTextColor(Color.BLUE)
+        .setTypeFace(ResourcesCompat.getFont(this, R.font.iran_sans_mobile))
+        .setTitleType(PersianDatePickerDialog.WEEKDAY_DAY_MONTH_YEAR)
+        .setShowInBottomSheet(true)
+        .setListener(object : CalendarActionListener {
+            override fun onDateSelected(persianCalendar: PersianCalendar) {
+                callback.invoke(persianCalendar.persianYear.toString() + "/" + persianCalendar.persianMonth + "/" + persianCalendar.persianDay)
+            }
+            override fun onDismissed() {}
+        }).show()
+}
+

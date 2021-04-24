@@ -40,6 +40,7 @@
     <string name="failed_operation">عملیات ناموفق بود.. مجددا تلاش کنید</string>
     <string name="enter_data">اطلاعات خود را وارد نمایید</string>
     <string name="send">ارسال</string>
+    <string name="today">امروز</string>
 
 
 </resources>
