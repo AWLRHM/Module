@@ -30,7 +30,7 @@ class CustomChooseDialog<T> private constructor(
     }
 
     private fun setup() {
-        setBackgroundColor(builder.backgroundColor)
+//        setBackgroundColor(builder.backgroundColor)
         setTitleColor(builder.titleColor)
         builder.callback?.let { setSource(builder.list, it) }
 

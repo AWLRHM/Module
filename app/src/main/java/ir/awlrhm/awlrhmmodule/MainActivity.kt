@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import ir.awlrhm.modules.models.DynamicModel
+import ir.awlrhm.modules.view.ChooseDialog
 import ir.awlrhm.modules.view.searchablePagingDialog.SearchablePagingDialog
 import ir.awrhm.awlrhmmodule.R
 import kotlinx.android.synthetic.main.activity_main.*
@@ -14,21 +15,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-      spinner.setOnClickListener { SearchablePagingDialog(
-          object : SearchablePagingDialog.OnActionListener<String>{
-              override fun onSearchPaging(pageNumber: Int, search: String) {
-                  
-              }
+      spinner.setOnClickListener {
+          ChooseDialog(mutableListOf()){
 
-              override fun onChoose(model: DynamicModel<String>) {
-                  
-              }
-
-              override fun onDismiss() {
-                  
-              }
-          }
-      ).show(supportFragmentManager, SearchablePagingDialog.TAG)
+          }.show(supportFragmentManager, ChooseDialog.TAG)
       }
         rclItem
             .layoutManager(GridLayoutManager(this,2))

@@ -12,7 +12,7 @@ import ir.awlrhm.modules.models.ItemModel
 import ir.awrhm.modules.R
 import kotlinx.android.synthetic.main.awlrhm_dialog_choose.*
 
-class ChooseDialog constructor(
+class ChooseDialog(
     private val list: MutableList<ItemModel>,
     private val titleColor: Int,
     private val backgroundColor: Int,
@@ -25,7 +25,7 @@ class ChooseDialog constructor(
     ) : this(
         list,
         R.color.white,
-        R.color.cyan_500, callback
+        callback
     )
 
     constructor(
@@ -49,7 +49,7 @@ class ChooseDialog constructor(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setBackgroundColor(backgroundColor)
+//        setBackgroundColor(backgroundColor)
         setTitleColor(titleColor)
         rclItems.layoutManager(LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false))
             .verticalDecoration()
