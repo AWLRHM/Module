@@ -37,7 +37,6 @@ class RegisterDataDialog(
                 activity.showFlashbar(
                     getString(R.string.warning),
                     getString(R.string.enter_data),
-                    false,
                     MessageStatus.ERROR
                 )
         }
