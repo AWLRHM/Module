@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import ir.awlrhm.modules.base.BaseDialogFragment
 import ir.awlrhm.modules.extentions.showFlashbar
 import ir.awrhm.modules.R
-import ir.awrhm.modules.enums.MessageStatus
+import ir.awlrhm.modules.enums.MessageStatus
 import kotlinx.android.synthetic.main.dialog_register_data.*
 
 class RegisterDataDialog(

@@ -1,4 +1,4 @@
-package ir.awrhm.modules.enums
+package ir.awlrhm.modules.enums
 
 enum class MessageStatus {
     INFORMATION,

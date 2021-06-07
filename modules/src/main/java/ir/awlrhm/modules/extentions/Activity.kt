@@ -20,10 +20,13 @@ import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.karumi.dexter.listener.single.PermissionListener
+import ir.awlrhm.modules.enums.FlashbarDuration
 import ir.awlrhm.modules.utils.OnPermissionListener
 import ir.awrhm.awrhm_flashbar.Flashbar
+import ir.awrhm.awrhm_flashbar.Flashbar.Companion.DURATION_LONG
 import ir.awrhm.modules.R
-import ir.awrhm.modules.enums.MessageStatus
+import ir.awlrhm.modules.enums.MessageStatus
+import ir.awrhm.awrhm_flashbar.Flashbar.Companion.DURATION_SHORT
 import java.io.File
 
 fun Activity.configBottomSheet(view: View, divide: Float) {
@@ -183,10 +186,9 @@ fun Activity.failureOperation(message: String? = getString(R.string.failed_opera
     )
 }
 
-fun Activity.showFlashbar(
+fun Activity.showFlashbarWithBackPressed(
     title: String,
     message: String,
-    backPressed: Boolean,
     status: MessageStatus
 ) {
     Flashbar.Builder(this)
@@ -212,14 +214,47 @@ fun Activity.showFlashbar(
         )
         .listenOutsideTaps(object : Flashbar.OnTapListener {
             override fun onTap(flashbar: Flashbar) {
-                if (backPressed) {
                     onBackPressed()
                     flashbar.dismiss()
-                } else flashbar.dismiss()
             }
         })
         .build()
         .show()
+}
+
+
+fun Activity.showFlashbar(
+    title: String,
+    message: String,
+    status: MessageStatus,
+    duration: FlashbarDuration
+) {
+    Flashbar.Builder(this)
+        .gravity(Flashbar.Gravity.TOP)
+        .title(if (title.isEmpty()) getString(R.string.error) else title)
+        .icon(
+            when (status) {
+                MessageStatus.ERROR -> R.drawable.ic_warning
+                MessageStatus.SUCCESS -> R.drawable.ic_success
+                MessageStatus.INFORMATION -> R.drawable.ic_information
+            }
+        )
+        .titleColorRes(R.color.black)
+        .titleSizeInSp(16f)
+        .message(message)
+        .messageColorRes(R.color.black)
+        .backgroundDrawable(
+            when (status) {
+                MessageStatus.SUCCESS -> R.color.green_A400
+                MessageStatus.INFORMATION -> R.color.blue_500
+                MessageStatus.ERROR -> R.color.orange_500
+            }
+        )
+        .duration(if(duration == FlashbarDuration.LONG) DURATION_LONG else DURATION_SHORT)
+        .build()
+        .show()
+
+
 }
 
 fun Activity.showActionFlashbar(

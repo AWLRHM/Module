@@ -17,7 +17,7 @@ import ir.awlrhm.modules.view.downloadVersion.DownloadNewVersion
 import ir.awlrhm.modules.view.downloadVersion.OnDownloadListener
 import ir.awlrhm.modules.view.progress.ProgressDialog
 import ir.awrhm.modules.R
-import ir.awrhm.modules.enums.MessageStatus
+import ir.awlrhm.modules.enums.MessageStatus
 import kotlin.system.exitProcess
 
 fun FragmentActivity.downloadNewVersion(

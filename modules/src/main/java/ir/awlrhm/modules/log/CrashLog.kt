@@ -9,7 +9,7 @@ import ir.awlrhm.modules.log.database.AWLRHMDatabaseHelper
 import ir.awlrhm.modules.log.investigation.Crash
 import ir.awlrhm.modules.log.viewmodel.CrashViewModel
 import ir.awlrhm.modules.view.ActionDialog
-import ir.awrhm.modules.enums.MessageStatus
+import ir.awlrhm.modules.enums.MessageStatus
 
 class CrashLog(
     private val activity: FragmentActivity

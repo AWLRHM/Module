@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import ir.awrhm.modules.R
-import ir.awrhm.modules.enums.MessageStatus
+import ir.awlrhm.modules.enums.MessageStatus
 import kotlinx.android.synthetic.main.awlrhm_action_dialog.*
 
 class ActionDialog private constructor(
