@@ -227,7 +227,7 @@ fun Activity.showFlashbar(
     title: String,
     message: String,
     status: MessageStatus,
-    duration: FlashbarDuration = FlashbarDuration.SHORT
+    duration: FlashbarDuration = FlashbarDuration.LONG
 ) {
     Flashbar.Builder(this)
         .gravity(Flashbar.Gravity.TOP)
