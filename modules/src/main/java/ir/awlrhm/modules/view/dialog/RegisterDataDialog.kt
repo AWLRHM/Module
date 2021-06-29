@@ -28,7 +28,7 @@ class RegisterDataDialog(
         super.onViewCreated(view, savedInstanceState)
         val activity = activity ?: return
 
-        btnAction.setOnClickListener {
+        layoutAction.setOnClickListener {
             val name = edtValue.text.toString()
             if (name.isNotEmpty()) {
                 callback.invoke(name)
@@ -44,7 +44,7 @@ class RegisterDataDialog(
 
     override fun setup() {
         txtTitle.text = if(title.isNotEmpty()) title else getString(R.string.enter_data)
-        btnAction.text = if(action.isNotEmpty()) action else getString(R.string.send)
+        txtAction.text = if(action.isNotEmpty()) action else getString(R.string.send)
     }
 
 
