@@ -41,8 +41,6 @@
         android:layout_marginEnd="18dp"
         android:layout_marginStart="18dp"
         android:textSize="@dimen/textAppearanceCaption"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/txtTitle" />
 
     <androidx.constraintlayout.widget.ConstraintLayout

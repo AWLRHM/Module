@@ -26,8 +26,8 @@ class RecyclerView(context: Context, attrs: AttributeSet) : FrameLayout(context,
     private var prcLoading: ProgressBar? = null
     private var noData: View? = null
     private var btnRetry: MaterialButton? = null
-    private var listener: OnActionListener?= null
-    private var layoutLoading: ConstraintLayout?= null
+    private var listener: OnActionListener? = null
+    private var layoutLoading: ConstraintLayout? = null
     var isOnLoading: Boolean = true
 
 
@@ -106,23 +106,23 @@ class RecyclerView(context: Context, attrs: AttributeSet) : FrameLayout(context,
     }
 
     var actionLoading: Boolean
-    get(){
-        return layoutLoading?.isVisible ?: false
-    }
-    set(value){
-        layoutLoading?.isVisible = value
-    }
+        get() {
+            return layoutLoading?.isVisible ?: false
+        }
+        set(value) {
+            layoutLoading?.isVisible = value
+        }
 
     var paging: Boolean
-        get(){
+        get() {
             return prcPaging.isVisible
         }
-        set(value){
+        set(value) {
             prcPaging.isVisible = value
         }
 
 
-    fun clear(){
+    fun clear() {
         recyclerView?.removeAllViews()
     }
 
@@ -148,7 +148,6 @@ class RecyclerView(context: Context, attrs: AttributeSet) : FrameLayout(context,
     }
 
 
-
     fun verticalDecoration(resId: Int = 0) = apply { setVerticalItemDecoration(resId) }
 
     fun gridDecoration(horizontalResId: Int = 0, verticalResId: Int = 0) = apply {
@@ -156,17 +155,21 @@ class RecyclerView(context: Context, attrs: AttributeSet) : FrameLayout(context,
     }
 
     fun theme(color: Int) = apply {
-       val prcPaging = prcPaging ?: return@apply
-       val prcLoading = prcLoading ?: return@apply
         val txtWait = layoutLoading?.findViewById<TextView>(R.id.txtWait)
         val prcWait = layoutLoading?.findViewById<ProgressBar>(R.id.prcWait)
-        val progressWait = prcWait ?: return@apply
-        val textWait = txtWait ?: return@apply
 
-        textWait.setTextColor(ContextCompat.getColor(context, color))
-        context.configProgressbar(progressWait, color)
-        context.configProgressbar(prcLoading, color)
-        context.configProgressbar(prcPaging, color)
+        txtWait?.let {
+            it.setTextColor(ContextCompat.getColor(context, color))
+        }
+        prcWait?.let {
+            context.configProgressbar(it, color)
+        }
+        prcLoading?.let {
+            context.configProgressbar(it, color)
+        }
+        prcPaging?.let {
+            context.configProgressbar(it, color)
+        }
     }
 
     fun layoutManager(manager: LinearLayoutManager) = apply { configRecyclerView(manager) }
@@ -184,7 +187,8 @@ class RecyclerView(context: Context, attrs: AttributeSet) : FrameLayout(context,
             dy: Int
         )
     }
-    interface OnActionListener{
+
+    interface OnActionListener {
         fun onRefresh()
     }
 }
