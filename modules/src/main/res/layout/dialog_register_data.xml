@@ -27,7 +27,7 @@
         android:fontFamily="@font/iran_sans"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="icon"
+        app:layout_constraintTop_toTopOf="@id/icon"
         app:layout_constraintBottom_toBottomOf="@id/icon"/>
 
     <EditText
@@ -38,6 +38,7 @@
         android:layout_marginTop="20dp"
         android:background="@drawable/border_primary"
         android:gravity="top|end"
+        android:padding="4dp"
         android:layout_marginEnd="18dp"
         android:layout_marginStart="18dp"
         android:textSize="@dimen/textAppearanceCaption"
