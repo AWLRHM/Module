@@ -9,6 +9,7 @@ import ir.awrhm.modules.R
 import ir.awlrhm.modules.enums.MessageStatus
 import ir.awlrhm.modules.extentions.yToast
 import kotlinx.android.synthetic.main.dialog_register_data.*
+import kotlinx.android.synthetic.main.dialog_register_data.view.*
 
 class RegisterDataDialog(
     private val title: String,
@@ -28,9 +29,9 @@ class RegisterDataDialog(
         super.onViewCreated(view, savedInstanceState)
         val activity = activity ?: return
 
-        this.txtTitle.text = if(title.isNotEmpty()) title else getString(R.string.enter_data)
-        this.txtAction.text = if(action.isNotEmpty()) action else getString(R.string.send)
-        this.layoutAction.setOnClickListener {
+        txtTitle.text = if(title.isNotEmpty()) title else getString(R.string.enter_data)
+        layoutAction.txtAction.text = if(action.isNotEmpty()) action else getString(R.string.send)
+        layoutAction.setOnClickListener {
             val name = edtValue.text.toString()
             if (name.isNotEmpty()) {
                 callback.invoke(name)
