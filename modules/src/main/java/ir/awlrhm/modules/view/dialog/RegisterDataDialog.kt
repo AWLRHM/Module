@@ -5,9 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import ir.awlrhm.modules.base.BaseDialogFragment
-import ir.awlrhm.modules.extentions.showFlashbar
 import ir.awrhm.modules.R
 import ir.awlrhm.modules.enums.MessageStatus
+import ir.awlrhm.modules.extentions.yToast
 import kotlinx.android.synthetic.main.dialog_register_data.*
 
 class RegisterDataDialog(
@@ -28,25 +28,20 @@ class RegisterDataDialog(
         super.onViewCreated(view, savedInstanceState)
         val activity = activity ?: return
 
-        layoutAction.setOnClickListener {
+        this.txtTitle.text = if(title.isNotEmpty()) title else getString(R.string.enter_data)
+        this.txtAction.text = if(action.isNotEmpty()) action else getString(R.string.send)
+        this.layoutAction.setOnClickListener {
             val name = edtValue.text.toString()
             if (name.isNotEmpty()) {
                 callback.invoke(name)
                 dismiss()
             } else
-                activity.showFlashbar(
-                    getString(R.string.warning),
+                activity.yToast(
                     getString(R.string.enter_data),
                     MessageStatus.ERROR
                 )
         }
     }
-
-    override fun setup() {
-        txtTitle.text = if(title.isNotEmpty()) title else getString(R.string.enter_data)
-        txtAction.text = if(action.isNotEmpty()) action else getString(R.string.send)
-    }
-
 
     override fun onStart() {
         super.onStart()

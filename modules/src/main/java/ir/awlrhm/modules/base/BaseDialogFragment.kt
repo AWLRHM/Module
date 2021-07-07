@@ -24,6 +24,6 @@ abstract class BaseDialogFragment: DialogFragment() {
         }
     }
 
-    abstract fun setup()
+    open fun setup(){}
     open fun handleOnClickListener(){}
 }

@@ -51,8 +51,7 @@
         android:background="@color/light_green_50"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/edtValue"
-        android:layout_marginTop="20dp"
-        android:visibility="visible">
+        android:layout_marginTop="20dp">
 
         <TextView
             android:id="@+id/txtAction"
@@ -68,5 +67,4 @@
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
